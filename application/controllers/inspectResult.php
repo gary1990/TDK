@@ -20,8 +20,8 @@ class InspectResult extends CW_Controller
 		$this->smarty->assign('type',$type);
 		//result
 		$testresult = array('' => '(ALL)',
-						   '0' => '不合格',
-						   '1' => '合格'
+						   '0' => 'Fail',
+						   '1' => 'Pass'
 						  );
 		$this->smarty->assign('testresult',$testresult);
 	}

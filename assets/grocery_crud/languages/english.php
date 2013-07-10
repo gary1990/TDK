@@ -12,7 +12,7 @@
 	$lang['list_search_all'] 		= 'Search all';
 	$lang['list_clear_filtering'] 	= 'Clear filtering';
 	$lang['list_delete'] 			= 'Delete';
-	$lang['list_edit'] 				= 'Edit';	
+	$lang['list_edit'] 				= 'Edit';
 	$lang['list_paging_first'] 		= 'First';
 	$lang['list_paging_previous'] 	= 'Previous';
 	$lang['list_paging_next'] 		= 'Next';
@@ -21,7 +21,7 @@
 
 	$lang['form_edit'] 				= 'Edit';
 	$lang['form_back_to_list'] 		= 'Back to list';
-	$lang['form_update_changes'] 	= 'Update changes';
+	$lang['form_update_changes'] 	= 'Update';
 	$lang['form_cancel'] 			= 'Cancel';	
 	$lang['form_update_loading'] 	= 'Loading, updating changes...';
 	$lang['update_success_message'] = 'Your data has been successfully updated.';	
@@ -55,12 +55,12 @@
 	$lang['form_active']			= 'active';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
+	$lang['form_save_and_go_back']	= 'Save and return';
+	$lang['form_update_and_go_back']= 'Update and return';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
+	$lang['form_save_and_go_back']	= 'Save and return';
+	$lang['form_update_and_go_back']= 'Update and return';
 
 	/* Upload functionality */
 	$lang['string_delete_file'] 	= "Deleting file";

@@ -109,15 +109,15 @@
 			</div>
 			<div class="serchCondition">
 				<span class="span-block1">
-					TimeFrom:
+					StartTime:
 				</span>
 				<input type="text" id="timefrom" name="timefrom" class="timefrom" value="{$smarty.post.timefrom|default:''}"/>
 				<span class="span-block1">
-					TimeTo:
+					EndTime:
 				</span>
 				<input id="timeto" type="text" id="timeto" name="timeto" class="timeto" value="{$smarty.post.timeto|default:''}"/>
+				<input class="searchBtn" type="submit" value="Search"/>
 			</div>
-			<input class="searchBtn" type="submit" value="Go"/>
 		</form>
 	</div>
 	<div>
@@ -143,9 +143,9 @@
 					<td>{$value['measvlaue']}</td>
 					<td>
 						{if $value['result'] eq 1}
-							<span style="color:green;">合格</span>
+							<span style="color:green;">Pass</span>
 						{else}
-							<span style="color:red;">不合格</span>
+							<span style="color:red;">Fail</span>
 						{/if}
 					</td>
 					<td>{$value['betchno']}</td>

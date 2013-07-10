@@ -65,7 +65,7 @@
 <!--{/block}-->
 <!--{block name=body}-->
 <div class="span-64 last subitems">
-	<a href="{site_url()}/incomingSpec/createGet/">Create</a>
+	<a href="{site_url()}/incomingSpec/createGet/">Add</a>
 	<table>
 		<tr>
 			<th>Part NO.</th>

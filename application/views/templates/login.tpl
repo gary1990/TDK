@@ -45,7 +45,7 @@
 			.button1{
 				cursor:pointer;
 				color:white;
-				background-color:blue;
+				background-color:#0066CC;
 				border: 0;
 				border-radius:5px;
 				width:85px;

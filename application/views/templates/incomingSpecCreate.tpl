@@ -19,6 +19,24 @@
 	{
 		margin-bottom:10px;
 	}
+	.input-long{
+		width:190px;
+	}
+	.input-short{
+		width:100px;
+	}
+	.input-165{
+		width:165px;
+	}
+	.text-area{
+		width:190px;
+	}
+	.select-long{
+		width:194px;
+	}
+	.select-short{
+		width:87px;
+	}
 </style>
 <!--{/block}-->
 <!--{block name=script}-->
@@ -54,6 +72,11 @@
 			promptPosition : "centerRight",
 			autoPositionUpdate : "true"
 		});
+		
+		$(".cancelBtn").click(function(){
+			var url = '{site_url()}/incomingSpec/';
+			window.location.replace(url);
+		});
 	});
 </script>
 <!--{/block}-->
@@ -62,53 +85,53 @@
 	<h3>Create</h3>
 	<form id="locLoginForm" action="{site_url()}/incomingSpec/createPost/" method="post">
 		<div class="margin-bottom10">
-			<span class="span-block125">Part No.:</span>
-			<input id='partno' name="partno" type="text" class="validate[required]" value="{$smarty.post.partno|default:''}"/>
+			<span class="span-block125">Part No.*:</span>
+			<input id='partno' name="partno" type="text" class="input-long validate[required]" value="{$smarty.post.partno|default:''}"/>
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Supplier:</span>
-			<input id="supplier" name="supplier" class="validate[required]" type="text" value="{$smarty.post.supplier|default:''}"/>
+			<span class="span-block125">Supplier*:</span>
+			<input id="supplier" name="supplier" class="input-long validate[required]" type="text" value="{$smarty.post.supplier|default:''}"/>
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Description:</span>
-			<textarea name="description">{$smarty.post.description|default:''}</textarea>
+			<textarea class="text-area" name="description">{$smarty.post.description|default:''}</textarea>
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Type:</span>
-			{html_options name=type class=type options=$typeArr selected=$smarty.post.type|default:'1'}
+			<span class="span-block125">Type*:</span>
+			{html_options name=type class="type select-long" options=$typeArr selected=$smarty.post.type|default:'1'}
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Test Voltage:</span>
-			<input id="testvoltage" name="testvoltage" class="validate[custom[testVoltageFormart]]" value="{$smarty.post.testvoltage|default:''}"/>
+			<input id="testvoltage" name="testvoltage" class="input-165 validate[custom[number]]" value="{$smarty.post.testvoltage|default:''}"/>Vdc
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Test Freq:</span>
-			<input id="frequencyvalue" name="frequencyvalue" class="validate[custom[number]]" value="{$smarty.post.frequencyvalue|default:''}"/>
-			{html_options name=frequnit class=frequnit options=$freqUnitArr selected=$smarty.post.frequnit|default:'kHz'}
+			<input id="frequencyvalue" name="frequencyvalue" class="input-short validate[custom[number]]" value="{$smarty.post.frequencyvalue|default:''}"/>
+			{html_options name=frequnit class="select-short frequnit" options=$freqUnitArr selected=$smarty.post.frequnit|default:'kHz'}
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Residual inductance:</span>
-			<input id="residualinductance" class="residualinductance validate[custom[number]]" name="residualinductance" value="{$smarty.post.residualinductance|default:''}"/>
+			<input id="residualinductance" class="input-long residualinductance validate[custom[number]]" name="residualinductance" value="{$smarty.post.residualinductance|default:''}"/>
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Nomimal Value:</span>
-			<input id="nominalvalue" class="nominalvalue validate[required,custom[number]]" name="nominalvalue" value="{$smarty.post.nominalvalue|default:''}"/>
+			<span class="span-block125">Nomimal Value*:</span>
+			<input id="nominalvalue" class="input-long nominalvalue validate[required,custom[number]]" name="nominalvalue" value="{$smarty.post.nominalvalue|default:''}"/>
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Unit:</span>
-			{html_options name=unit class=unit options=$unitArr selected=$smarty.post.unit|default:'5'}
+			<span class="span-block125">Unit*:</span>
+			{html_options name=unit class="unit select-long" options=$unitArr selected=$smarty.post.unit|default:'5'}
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Tol %:</span>
-			+/-<input id="tolerance" class="tolerance validate[custom[number]]" name="tolerance" value="{$smarty.post.tolerance|default:''}"/>%
+			<span class="span-block125">Tol %*:</span>
+			+/-<input id="tolerance" class="tolerance validate[required,custom[number]]" name="tolerance" value="{$smarty.post.tolerance|default:''}"/>%
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Tol Num:</span>
-			+/-<input id="tolerancenum" class="tolerancenum validate[custom[number]]" name="tolerancenum" value="{$smarty.post.tolerancenum|default:''}"/>
+			<span class="span-block125">Tol Num*:</span>
+			+/-<input id="tolerancenum" class="tolerancenum validate[required,custom[number]]" name="tolerancenum" value="{$smarty.post.tolerancenum|default:''}"/>
 		</div>
-		<div>
-			<input type="submit" value="save"/>
-			<a href="{site_url()}/incomingSpec/">Back To List</a>
+		<div style="margin-top: 20px;">
+			<input type="submit" value="Save"/>
+			<input class="cancelBtn" type="button" value="Cancel"/>
 		</div>
 	</form>
 	<div style="color:red;">{$errmesg|default:''}</div>

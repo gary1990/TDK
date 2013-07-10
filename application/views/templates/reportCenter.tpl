@@ -29,6 +29,10 @@
 			xAxis :
 			{
 				categories : [],
+				enabled: false,
+				labels: {
+                    rotation: -90
+                }
 			},
 			yAxis :
 			{
@@ -52,7 +56,7 @@
 			},
 			tooltip :
 			{
-				valueSuffix: []
+				valueSuffix: ['{$unitname|default:''}']
 			},
 			series : []
 		};
@@ -63,12 +67,9 @@
 			pointWidth : 14,
 			dataLabels :
 			{
-				enabled : true,
+				enabled : false,
 				rotation : -90,
 				color : '#FFFFFF',
-				align : 'right',
-				x : -3,
-				y : 10,
 				formatter : function()
 				{
 					return this.y;
@@ -93,12 +94,8 @@
 			pointWidth : 14,
 			dataLabels :
 			{
-				enabled : true,
-				rotation : -90,
+				enabled : false,
 				color : '#FFFFFF',
-				align : 'right',
-				x : -3,
-				y : 10,
 				formatter : function()
 				{
 					return this.y;
@@ -110,8 +107,8 @@
 				}
 			}
 		};
-		/*{foreach from=$resultList key=aaa item=value}*/
-		options.xAxis.categories.push("*");
+		/*{foreach from=$resultList key=k item=value}*/
+		options.xAxis.categories.push('{$k}');
 		series.data.push(/*{$value}*/);
 		/*{/foreach}*/
 		/*{foreach from=$limitLine2 key=k item=value}*/
@@ -164,7 +161,7 @@
 			<span class="span-block1">
 				Part NO.:
 			</span>
-			{html_options name=partno class=partno options=$partno selected=$smarty.post.partno|default:''}
+			{html_options name=partno class=partno options=$partnoArr selected=$smarty.post.partno|default:''}
 			<span class="span-block1">
 				Start time:
 			</span>

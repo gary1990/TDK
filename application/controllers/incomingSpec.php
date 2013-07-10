@@ -68,6 +68,15 @@ class IncomingSpec extends CW_Controller
 		{
 			$err .= 'Part No is required<br>';
 		}
+		else
+		{
+			$partnoRecordObj = $this->db->query("SELECT id FROM incomingspec WHERE partno = ?",$partno);
+			$partnoRecordArr = $partnoRecordObj->result_array();
+			if(count($partnoRecordArr) != 0)
+			{
+				$err .= 'Part No already exists<br>';
+			}
+		}
 		$supplier = emptyToNull($this->input->post("supplier"));
 		if($supplier == '')
 		{
@@ -78,9 +87,13 @@ class IncomingSpec extends CW_Controller
 		$testvoltage = emptyToNull($this->input->post("testvoltage"));
 		if($testvoltage != '')
 		{
-			if(substr($testvoltage, -3) != 'Vdc' || !is_numeric(substr($testvoltage, 0, -3)))
+			if(is_numeric($testvoltage))
 			{
-				$err .= 'Incorrect fortmart Of Test Voltage<br>';
+				$testvoltage = $testvoltage.'Vdc';
+			}
+			else
+			{
+				$err .= "Incorrect fortmart Of Test voltage<br>";
 			}
 		}
 		$frequencyvalue = emptyToNull($this->input->post("frequencyvalue"));
@@ -178,14 +191,42 @@ class IncomingSpec extends CW_Controller
 	{
 		$incomingSpecId = emptyToNull($this->input->post("incomingSpecId"));
 		$err = "";
+		
 		$partno = emptyToNull($this->input->post("partno"));
-
+		if($partno == '')
+		{
+			$err .= 'Part No is required<br>';
+		}
+		else
+		{
+			$partnoRecordObj = $this->db->query("SELECT id FROM incomingspec WHERE partno = ? AND id != ?",array($partno,$incomingSpecId));
+			$partnoRecordArr = $partnoRecordObj->result_array();
+			if(count($partnoRecordArr) != 0)
+			{
+				$err .= "Part No '".$partno."' already exists<br>";
+			}
+		}
 		$supplier = emptyToNull($this->input->post("supplier"));
-
+		if($supplier == '')
+		{
+			$err .= 'supplier No is required<br>';
+		}
+		
 		$description = emptyToNull($this->input->post("description"));
 		$type = emptyToNull($this->input->post("type"));
 		$testvoltage = emptyToNull($this->input->post("testvoltage"));
-
+		if($testvoltage != '')
+		{
+			if(is_numeric($testvoltage))
+			{
+				$testvoltage = $testvoltage.'Vdc';
+			}
+			else
+			{
+				$err .= "Incorrect fortmart Of Test voltage '".$testvoltage."'<br>";
+			}
+		}
+		
 		$frequencyvalue = emptyToNull($this->input->post("frequencyvalue"));
 		$frequnit = emptyToNull($this->input->post("frequnit"));
 		$testfrequency = '';
@@ -195,15 +236,30 @@ class IncomingSpec extends CW_Controller
 		}
 
 		$residualinductance = emptyToNull($this->input->post("residualinductance"));
-
+		
 		$nominalvalue = emptyToNull($this->input->post("nominalvalue"));
 
 		$unit = $this->input->post("unit");
 		$tolerance = emptyToNull($this->input->post("tolerance"));
-
+		
 		$tolerancenum = emptyToNull($this->input->post("tolerancenum"));
-
-		$incomingSpecSql = "UPDATE `incomingspec` SET 
+		
+		if($err != '')
+		{
+			$incomingRecordSql = "SELECT a.*,b.id AS unitid
+							  FROM incomingspec a
+						      JOIN unit b ON a.unit = b.id
+						      AND a.id = ".$incomingSpecId;
+			$incomingRecordObj = $this->db->query($incomingRecordSql);
+			$incomingRecord = $incomingRecordObj->first_row("array");
+			$this->smarty->assign("incomingRecord",$incomingRecord);
+			$this->smarty->assign("errmesg",$err);
+			$this->smarty->assign("currenmenu","incomingspect");
+			$this->smarty->display("incomingSpecEdit.tpl");
+		}
+		else
+		{
+			$incomingSpecSql = "UPDATE `incomingspec` SET 
 				  			`partno` = ? ,
 				  			`supplier` = ?,
 				  			`description` = ?,
@@ -215,22 +271,22 @@ class IncomingSpec extends CW_Controller
 				  			`tolerance` = ?,
 				  			`tolerancenum` = ?,
 				  			`residualinductance` = ? WHERE id = ?";
-		$this->db->query($incomingSpecSql, array(
-							$partno,
-							$supplier,
-							$description,
-							$type,
-							$testvoltage,
-							$testfrequency,
-							$nominalvalue,
-							$unit,
-							$tolerance,
-							$tolerancenum,
-							$residualinductance,
-							$incomingSpecId
-					    ));
-		$this->index();
-		
+			$this->db->query($incomingSpecSql, array(
+								$partno,
+								$supplier,
+								$description,
+								$type,
+								$testvoltage,
+								$testfrequency,
+								$nominalvalue,
+								$unit,
+								$tolerance,
+								$tolerancenum,
+								$residualinductance,
+								$incomingSpecId
+						    ));
+			$this->index();
+		}
 	}
 	
 	public function delete($var)

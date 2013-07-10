@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2013-07-08 18:06:40
+<?php /* Smarty version Smarty-3.1.8, created on 2013-07-10 14:06:18
          compiled from "application/views/templates\reportCenter.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:744951d465de459ae6-26358603%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '69bf5d58343c558d9d9f83b489d47615c4b069a8' => 
     array (
       0 => 'application/views/templates\\reportCenter.tpl',
-      1 => 1373277996,
+      1 => 1373436376,
       2 => 'file',
     ),
     '0a09857ede85b02bbc4dd7a34cfdea24f1afa9f0' => 
@@ -170,6 +170,10 @@ resource/js/calendar/ui.datepicker.js"></script>
 			xAxis :
 			{
 				categories : [],
+				enabled: false,
+				labels: {
+                    rotation: -90
+                }
 			},
 			yAxis :
 			{
@@ -193,7 +197,8 @@ resource/js/calendar/ui.datepicker.js"></script>
 			},
 			tooltip :
 			{
-				valueSuffix: []
+				valueSuffix: ['<?php echo (($tmp = @$_smarty_tpl->tpl_vars['unitname']->value)===null||$tmp==='' ? '' : $tmp);?>
+']
 			},
 			series : []
 		};
@@ -204,12 +209,9 @@ resource/js/calendar/ui.datepicker.js"></script>
 			pointWidth : 14,
 			dataLabels :
 			{
-				enabled : true,
+				enabled : false,
 				rotation : -90,
 				color : '#FFFFFF',
-				align : 'right',
-				x : -3,
-				y : 10,
 				formatter : function()
 				{
 					return this.y;
@@ -234,12 +236,8 @@ resource/js/calendar/ui.datepicker.js"></script>
 			pointWidth : 14,
 			dataLabels :
 			{
-				enabled : true,
-				rotation : -90,
+				enabled : false,
 				color : '#FFFFFF',
-				align : 'right',
-				x : -3,
-				y : 10,
 				formatter : function()
 				{
 					return this.y;
@@ -252,13 +250,14 @@ resource/js/calendar/ui.datepicker.js"></script>
 			}
 		};
 		<?php  $_smarty_tpl->tpl_vars['value'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['value']->_loop = false;
- $_smarty_tpl->tpl_vars['aaa'] = new Smarty_Variable;
+ $_smarty_tpl->tpl_vars['k'] = new Smarty_Variable;
  $_from = $_smarty_tpl->tpl_vars['resultList']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['value']->key => $_smarty_tpl->tpl_vars['value']->value){
 $_smarty_tpl->tpl_vars['value']->_loop = true;
- $_smarty_tpl->tpl_vars['aaa']->value = $_smarty_tpl->tpl_vars['value']->key;
+ $_smarty_tpl->tpl_vars['k']->value = $_smarty_tpl->tpl_vars['value']->key;
 ?>
-		options.xAxis.categories.push("*");
+		options.xAxis.categories.push('<?php echo $_smarty_tpl->tpl_vars['k']->value;?>
+');
 		series.data.push(<?php echo $_smarty_tpl->tpl_vars['value']->value;?>
 );
 		<?php } ?>
@@ -379,7 +378,7 @@ index.php/inspector">
 			<span class="span-block1">
 				Part NO.:
 			</span>
-			<?php echo smarty_function_html_options(array('name'=>'partno','class'=>'partno','options'=>$_smarty_tpl->tpl_vars['partno']->value,'selected'=>(($tmp = @$_POST['partno'])===null||$tmp==='' ? '' : $tmp)),$_smarty_tpl);?>
+			<?php echo smarty_function_html_options(array('name'=>'partno','class'=>'partno','options'=>$_smarty_tpl->tpl_vars['partnoArr']->value,'selected'=>(($tmp = @$_POST['partno'])===null||$tmp==='' ? '' : $tmp)),$_smarty_tpl);?>
 
 			<span class="span-block1">
 				Start time:

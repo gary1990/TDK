@@ -7,15 +7,16 @@ class ReportCenter extends CW_Controller
 	{
 		parent::__construct();
 		$this->load->library('grocery_CRUD');
-		//Part No.
-		$partnoObj = $this->db->query("SELECT DISTINCT a.partno FROM incomingspec a");
-		$partnoArr = $partnoObj->result_array();
-		$partno = $this->array_switch($partnoArr, 'partno', '');
-		$this->smarty->assign('partno',$partno);
 	}
 	
 	public function index()
 	{
+		//Part No.
+		$partnoObj = $this->db->query("SELECT DISTINCT a.partno FROM incomingspec a");
+		$partnoArr = $partnoObj->result_array();
+		$partnoArr = $this->array_switch($partnoArr, 'partno', '');
+		$this->smarty->assign('partnoArr',$partnoArr);
+		
 		$partnoSql = '';
 		$partno = emptyToNull($this->input->post("partno"));
 		if($partno != '')
@@ -39,7 +40,6 @@ class ReportCenter extends CW_Controller
 			$endtimeSql = " AND a.testTime <= '".$endtime."' ";
 		}
 		
-		
 		$resultList = array();
 		$limitLine1 = array();
 		$limitLine2 = array();
@@ -59,7 +59,13 @@ class ReportCenter extends CW_Controller
 					  JOIN unit c ON b.unit = c.id ".$partnoSql.$starttimeSql.$endtimeSql;
 			$resultObj = $this->db->query($resultSql);
 			$resultArr = $resultObj->result_array();
-
+			
+			if(count($resultArr) != 0)
+			{
+				$unitname = $resultArr[0]['unitname'];
+				$this->smarty->assign("unitname",$unitname);
+			}
+			
 			foreach ($resultArr as $value)
 			{
 				$measvlaue = $value['measvlaue'];

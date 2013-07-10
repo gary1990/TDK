@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2013-07-08 17:58:32
+<?php /* Smarty version Smarty-3.1.8, created on 2013-07-10 11:57:38
          compiled from "application/views/templates\incomingSpecEdit.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:2522751d45947e79595-97312990%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '4dd7ffa3f98bdfb67dd5a8a525000afb3af79f16' => 
     array (
       0 => 'application/views/templates\\incomingSpecEdit.tpl',
-      1 => 1373083058,
+      1 => 1373428648,
       2 => 'file',
     ),
     '0a09857ede85b02bbc4dd7a34cfdea24f1afa9f0' => 
@@ -156,6 +156,24 @@ resource/img/right.png") no-repeat right top;
 	{
 		margin-bottom:10px;
 	}
+	.input-long{
+		width:190px;
+	}
+	.input-short{
+		width:100px;
+	}
+	.input-165{
+		width:165px;
+	}
+	.text-area{
+		width:190px;
+	}
+	.select-long{
+		width:194px;
+	}
+	.select-short{
+		width:87px;
+	}
 </style>
 
 		
@@ -191,6 +209,11 @@ resource/img/right.png") no-repeat right top;
 		{
 			promptPosition : "centerRight",
 			autoPositionUpdate : "true"
+		});
+		$(".cancelBtn").click(function(){
+			var url = '<?php echo site_url();?>
+/incomingSpec/';
+			window.location.replace(url);
 		});
 	});
 </script>
@@ -253,69 +276,73 @@ index.php/inspector">
 		<input name="incomingSpecId" type="hidden" value="<?php echo (($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['id'])===null||$tmp==='' ? $_POST['incomingSpecId'] : $tmp);?>
 "/>
 		<div class="margin-bottom10">
-			<span class="span-block125">Part No.:</span>
-			<input id='partno' name="partno" type="text" class="validate[required]" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['partno'])===null||$tmp==='' ? $_POST['partno'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
+			<span class="span-block125">Part No.*:</span>
+			<input id='partno' name="partno" type="text" class="input-long validate[required]" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['partno'])===null||$tmp==='' ? $_POST['partno'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
 "/>
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Supplier:</span>
-			<input id="supplier" name="supplier" class="validate[required]" type="text" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['supplier'])===null||$tmp==='' ? $_POST['supplier'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
+			<span class="span-block125">Supplier*:</span>
+			<input id="supplier" name="supplier" class="input-long validate[required]" type="text" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['supplier'])===null||$tmp==='' ? $_POST['supplier'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
 "/>
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Description:</span>
-			<textarea name="description"><?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['description'])===null||$tmp==='' ? $_POST['description'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
+			<textarea class="text-area" name="description"><?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['description'])===null||$tmp==='' ? $_POST['description'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
 </textarea>
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Type:</span>
-			<?php echo smarty_function_html_options(array('name'=>'type','class'=>'type','options'=>$_smarty_tpl->tpl_vars['typeArr']->value,'selected'=>(($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['type'])===null||$tmp==='' ? $_POST['type'] : $tmp))===null||$tmp==='' ? '1' : $tmp)),$_smarty_tpl);?>
+			<span class="span-block125">Type*:</span>
+			<?php echo smarty_function_html_options(array('name'=>'type','class'=>"select-long type",'options'=>$_smarty_tpl->tpl_vars['typeArr']->value,'selected'=>(($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['type'])===null||$tmp==='' ? $_POST['type'] : $tmp))===null||$tmp==='' ? '1' : $tmp)),$_smarty_tpl);?>
 
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Test Voltage:</span>
-			<input id="testvoltage" name="testvoltage" class="validate[custom[testVoltageFormart]]" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['testvoltage'])===null||$tmp==='' ? $_POST['testvoltage'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
-"/>
+			<input id="testvoltage" name="testvoltage" class="input-165 validate[custom[number]]" value="<?php if (strlen($_smarty_tpl->tpl_vars['incomingRecord']->value['testvoltage'])==0){?><?php }else{ ?><?php echo substr($_smarty_tpl->tpl_vars['incomingRecord']->value['testvoltage'],0,-(($tmp = @3)===null||$tmp==='' ? '' : $tmp));?>
+<?php }?>"/>Vdc
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Test Freq:</span>
-			<input id="frequencyvalue" name="frequencyvalue" class="validate[custom[number]]" value="<?php echo substr($_smarty_tpl->tpl_vars['incomingRecord']->value['testfrequency'],0,-(($tmp = @(($tmp = @3)===null||$tmp==='' ? $_POST['frequencyvalue'] : $tmp))===null||$tmp==='' ? '' : $tmp));?>
+			<input id="frequencyvalue" name="frequencyvalue" class="input-short validate[custom[number]]" value="<?php echo substr($_smarty_tpl->tpl_vars['incomingRecord']->value['testfrequency'],0,-(($tmp = @(($tmp = @3)===null||$tmp==='' ? $_POST['frequencyvalue'] : $tmp))===null||$tmp==='' ? '' : $tmp));?>
 "/>
-			<?php echo smarty_function_html_options(array('name'=>'frequnit','class'=>'frequnit','options'=>$_smarty_tpl->tpl_vars['freqUnitArr']->value,'selected'=>substr($_smarty_tpl->tpl_vars['incomingRecord']->value['testfrequency'],-(($tmp = @(($tmp = @3)===null||$tmp==='' ? $_POST['frequnit'] : $tmp))===null||$tmp==='' ? 'kHz' : $tmp))),$_smarty_tpl);?>
+			<?php echo smarty_function_html_options(array('name'=>'frequnit','class'=>"select-short frequnit",'options'=>$_smarty_tpl->tpl_vars['freqUnitArr']->value,'selected'=>substr($_smarty_tpl->tpl_vars['incomingRecord']->value['testfrequency'],-(($tmp = @(($tmp = @3)===null||$tmp==='' ? $_POST['frequnit'] : $tmp))===null||$tmp==='' ? 'kHz' : $tmp))),$_smarty_tpl);?>
 
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Residual inductance:</span>
-			<input id="residualinductance" class="residualinductance validate[custom[number]]" name="residualinductance" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['residualinductance'])===null||$tmp==='' ? $_POST['residualinductance'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
+			<?php if ($_smarty_tpl->tpl_vars['incomingRecord']->value['type']==1){?>
+			<input id="residualinductance" class="input-long residualinductance validate[custom[number]]" name="residualinductance" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['residualinductance'])===null||$tmp==='' ? $_POST['residualinductance'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
 "/>
+			<?php }else{ ?>
+			<input id="residualinductance" disabled="disabled" class="input-long residualinductance validate[custom[number]]" name="residualinductance" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['residualinductance'])===null||$tmp==='' ? $_POST['residualinductance'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
+"/>
+			<?php }?>
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Nomimal Value:</span>
-			<input id="nominalvalue" class="nominalvalue validate[required,custom[number]]" name="nominalvalue" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['nominalvalue'])===null||$tmp==='' ? $_POST['nominalvalue'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
+			<span class="span-block125">Nomimal Value*:</span>
+			<input id="nominalvalue" class="input-long nominalvalue validate[required,custom[number]]" name="nominalvalue" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['nominalvalue'])===null||$tmp==='' ? $_POST['nominalvalue'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
 "/>
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Unit:</span>
-			<?php echo smarty_function_html_options(array('name'=>'unit','class'=>'unit','options'=>$_smarty_tpl->tpl_vars['unitArr']->value,'selected'=>(($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['unit'])===null||$tmp==='' ? $_POST['unit'] : $tmp))===null||$tmp==='' ? '5' : $tmp)),$_smarty_tpl);?>
+			<?php echo smarty_function_html_options(array('name'=>'unit','class'=>"select-long unit",'options'=>$_smarty_tpl->tpl_vars['unitArr']->value,'selected'=>(($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['unit'])===null||$tmp==='' ? $_POST['unit'] : $tmp))===null||$tmp==='' ? '5' : $tmp)),$_smarty_tpl);?>
 
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Tol %:</span>
-			+/-<input id="tolerance" class="tolerance validate[custom[number]]" name="tolerance" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['tolerance'])===null||$tmp==='' ? $_POST['tolerance'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
+			<span class="span-block125">Tol %*:</span>
+			+/-<input id="tolerance" class="tolerance validate[required,custom[number]]" name="tolerance" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['tolerance'])===null||$tmp==='' ? $_POST['tolerance'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
 "/>%
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Tol Num:</span>
-			+/-<input id="tolerancenum" class="tolerancenum validate[custom[number]]" name="tolerancenum" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['tolerancenum'])===null||$tmp==='' ? $_POST['tolerancenum'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
+			<span class="span-block125">Tol Num*:</span>
+			+/-<input id="tolerancenum" class="tolerancenum validate[required,custom[number]]" name="tolerancenum" value="<?php echo (($tmp = @(($tmp = @$_smarty_tpl->tpl_vars['incomingRecord']->value['tolerancenum'])===null||$tmp==='' ? $_POST['tolerancenum'] : $tmp))===null||$tmp==='' ? '' : $tmp);?>
 "/>
 		</div>
-		<div>
-			<input type="submit" value="save"/>
-			<a href="<?php echo site_url();?>
-/incomingSpec/">Back To List</a>
+		<div style="margin-top: 20px;">
+			<input type="submit" value="Save"/>
+			<input class="cancelBtn" type="button" value="Cancel"/>
 		</div>
 	</form>
-	<div><?php echo (($tmp = @$_smarty_tpl->tpl_vars['errmesg']->value)===null||$tmp==='' ? '' : $tmp);?>
+	<div style="color:red;"><?php echo (($tmp = @$_smarty_tpl->tpl_vars['errmesg']->value)===null||$tmp==='' ? '' : $tmp);?>
 </div>
 </div>
 

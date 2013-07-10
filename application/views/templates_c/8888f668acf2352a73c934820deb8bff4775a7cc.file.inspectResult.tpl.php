@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2013-07-08 12:52:44
+<?php /* Smarty version Smarty-3.1.8, created on 2013-07-10 12:03:55
          compiled from "application/views/templates\inspectResult.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:1335451d50ea7cc9c60-60232018%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '8888f668acf2352a73c934820deb8bff4775a7cc' => 
     array (
       0 => 'application/views/templates\\inspectResult.tpl',
-      1 => 1373259128,
+      1 => 1373429032,
       2 => 'file',
     ),
     '0a09857ede85b02bbc4dd7a34cfdea24f1afa9f0' => 
@@ -306,17 +306,17 @@ index.php/inspector">
 			</div>
 			<div class="serchCondition">
 				<span class="span-block1">
-					TimeFrom:
+					StartTime:
 				</span>
 				<input type="text" id="timefrom" name="timefrom" class="timefrom" value="<?php echo (($tmp = @$_POST['timefrom'])===null||$tmp==='' ? '' : $tmp);?>
 "/>
 				<span class="span-block1">
-					TimeTo:
+					EndTime:
 				</span>
 				<input id="timeto" type="text" id="timeto" name="timeto" class="timeto" value="<?php echo (($tmp = @$_POST['timeto'])===null||$tmp==='' ? '' : $tmp);?>
 "/>
+				<input class="searchBtn" type="submit" value="Search"/>
 			</div>
-			<input class="searchBtn" type="submit" value="Go"/>
 		</form>
 	</div>
 	<div>
@@ -353,9 +353,9 @@ $_smarty_tpl->tpl_vars['value']->_loop = true;
 </td>
 					<td>
 						<?php if ($_smarty_tpl->tpl_vars['value']->value['result']==1){?>
-							<span style="color:green;">合格</span>
+							<span style="color:green;">Pass</span>
 						<?php }else{ ?>
-							<span style="color:red;">不合格</span>
+							<span style="color:red;">Fail</span>
 						<?php }?>
 					</td>
 					<td><?php echo $_smarty_tpl->tpl_vars['value']->value['betchno'];?>

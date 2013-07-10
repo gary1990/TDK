@@ -16,7 +16,7 @@ class Inspector extends CW_Controller
 		$crud->set_theme('datatables');
 		$crud->required_fields('name');
 		$crud->display_as('name', 'Name')
-			 ->display_as('username', 'Username')
+			 ->display_as('username', 'EmpNo')
 			 ->display_as('password', 'Password');
 		$crud->unset_export();
 		$crud->unset_print();
@@ -26,11 +26,11 @@ class Inspector extends CW_Controller
 		$postUrl = $this->uri->uri_string();
 		if(strpos($postUrl, "insert_validation") != FALSE)
 		{
-			$crud->set_rules('username','username','callback_add_username');
+			$crud->set_rules('username','EmpNo','callback_add_username');
 		}
 		else if(strpos($postUrl, "update_validation") != FALSE)
 		{
-			$crud->set_rules('username','username','callback_edit_username');
+			$crud->set_rules('username','EmpNo','callback_edit_username');
 		}
 		else
 		{
@@ -50,7 +50,7 @@ class Inspector extends CW_Controller
 	{
 		if(strlen($str) < 6)
 		{
-			$this->form_validation->set_message('add_username', 'username should character or number,must more than six.');
+			$this->form_validation->set_message('add_username', 'EmpNo should character or number,must more than six.');
 			return FALSE;
 		}
 		else
@@ -60,7 +60,7 @@ class Inspector extends CW_Controller
 				$nameRecordObj = $this->db->query("SELECT a.username FROM user a WHERE a.username = '$str'");
 				if($nameRecordObj->num_rows() != 0)
 				{
-					$this->form_validation->set_message('add_username', 'This username has exists');
+					$this->form_validation->set_message('add_username', 'This EmpNo already exists');
 					return FALSE;
 				}
 				else
@@ -70,7 +70,7 @@ class Inspector extends CW_Controller
 			}
 			else
 			{
-				$this->form_validation->set_message('add_username', 'username should character or number must more than six.');
+				$this->form_validation->set_message('add_username', 'EmpNo should character or number must more than six.');
 				return FALSE;
 			}
 		}
@@ -80,7 +80,7 @@ class Inspector extends CW_Controller
 	{
 		if(strlen($str) < 6)
 		{
-			$this->form_validation->set_message('edit_username', 'username should character or number,must more than six.');
+			$this->form_validation->set_message('edit_username', 'EmpNo should character or number,must more than six.');
 			return FALSE;
 		}
 		else
@@ -96,7 +96,7 @@ class Inspector extends CW_Controller
 				//记录为空时允许修改，不为空时，不允许修改
 				if($num != 0)
 				{
-					$this->form_validation->set_message('edit_username', 'This username has exists.');
+					$this->form_validation->set_message('edit_username', 'This EmpNo already exists.');
 					return FALSE;
 				}
 				else
@@ -106,7 +106,7 @@ class Inspector extends CW_Controller
 			}
 			else
 			{
-				$this->form_validation->set_message('edit_username', 'username should character or number must more than six.');
+				$this->form_validation->set_message('edit_username', 'EmpNo should character or number must more than six.');
 				return FALSE;
 			}
 		}	
@@ -117,7 +117,7 @@ class Inspector extends CW_Controller
 	{
 		if(strlen($str) < 6)
 		{
-			$this->form_validation->set_message('check_user_password', 'password should character or number must more than six.');
+			$this->form_validation->set_message('check_user_password', 'Password should character or number must more than six.');
 			return FALSE;
 		}
 		else
@@ -128,7 +128,7 @@ class Inspector extends CW_Controller
 			}
 			else
 			{
-				$this->form_validation->set_message('check_user_password', 'password should character or number must more than six.');
+				$this->form_validation->set_message('check_user_password', 'Password should character or number must more than six.');
 				return FALSE;
 			}
 		}

@@ -1,29 +1,29 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2013-07-09 14:11:09
+<?php /* Smarty version Smarty-3.1.8, created on 2013-07-10 12:16:35
          compiled from "application/views/templates\login.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:81851d4da5cb7bb39-32400503%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1177951dcbecb7f15d8-67103586%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'e9c889001306a3e2053110da57cc123d828ca022' => 
     array (
       0 => 'application/views/templates\\login.tpl',
-      1 => 1373350266,
+      1 => 1373429792,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '81851d4da5cb7bb39-32400503',
+  'nocache_hash' => '1177951dcbecb7f15d8-67103586',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_51d4da5dafd971_56851319',
+  'unifunc' => 'content_51dcbecb87bcc8_87972774',
   'variables' => 
   array (
     'loginErrorInfo' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_51d4da5dafd971_56851319')) {function content_51d4da5dafd971_56851319($_smarty_tpl) {?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?php if ($_valid && !is_callable('content_51dcbecb87bcc8_87972774')) {function content_51dcbecb87bcc8_87972774($_smarty_tpl) {?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -79,7 +79,7 @@ resource/js/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
 			.button1{
 				cursor:pointer;
 				color:white;
-				background-color:blue;
+				background-color:#0066CC;
 				border: 0;
 				border-radius:5px;
 				width:85px;
