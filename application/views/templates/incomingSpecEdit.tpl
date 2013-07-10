@@ -122,8 +122,8 @@
 			<input id="nominalvalue" class="input-long nominalvalue validate[required,custom[number]]" name="nominalvalue" value="{$incomingRecord['nominalvalue']|default:$smarty.post.nominalvalue|default:''}"/>
 		</div>
 		<div class="margin-bottom10">
-			<span class="span-block125">Unit:</span>
-			{html_options name=unit class="select-long unit" options=$unitArr selected=$incomingRecord['unit']|default:$smarty.post.unit|default:'5'}
+			<span class="span-block125">Unit*:</span>
+			{html_options name=unit class="select-long unit" options=$unitArrEdit selected=$incomingRecord['unit']|default:$smarty.post.unit|default:''}
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Tol %*:</span>

@@ -119,7 +119,7 @@
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Unit*:</span>
-			{html_options name=unit class="unit select-long" options=$unitArr selected=$smarty.post.unit|default:'5'}
+			{html_options name=unit class="unit select-long" options=$unitArrCreat selected=$smarty.post.unit|default:''}
 		</div>
 		<div class="margin-bottom10">
 			<span class="span-block125">Tol %*:</span>

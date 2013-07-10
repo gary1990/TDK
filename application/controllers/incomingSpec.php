@@ -56,6 +56,14 @@ class IncomingSpec extends CW_Controller
 	
 	public function createGet()
 	{
+		//取得单位
+		$unitObj = $this->db->query("SELECT a.* FROM unit a
+									JOIN type b ON a.type = b.id
+									AND b.name = 'Ind' ");
+		$unitArrCreat = $unitObj->result_array();
+		$unitArrCreat = $this->array_switch($unitArrCreat,"name");
+		$this->smarty->assign("unitArrCreat",$unitArrCreat);
+		
 		$this->smarty->assign("currenmenu","incomingspect");
 		$this->smarty->display("incomingSpecCreate.tpl");
 	}
@@ -182,6 +190,15 @@ class IncomingSpec extends CW_Controller
 						      AND a.id = ".$id;
 		$incomingRecordObj = $this->db->query($incomingRecordSql);
 		$incomingRecord = $incomingRecordObj->first_row("array");
+		
+		//取得单位
+		$unitObj = $this->db->query("SELECT a.* FROM unit a
+									JOIN type b ON a.type = b.id
+									AND b.id = ".$incomingRecord['type']);
+		$unitArrEdit = $unitObj->result_array();
+		$unitArrEdit = $this->array_switch($unitArrEdit,"name");
+		$this->smarty->assign("unitArrEdit",$unitArrEdit);
+		
 		$this->smarty->assign("incomingRecord",$incomingRecord);
 		$this->smarty->assign("currenmenu","incomingspect");
 		$this->smarty->display("incomingSpecEdit.tpl");
@@ -365,8 +382,6 @@ class IncomingSpec extends CW_Controller
 				$toleranceNum = '';
 				$adjust = '';
 				//check col num
-				echo $highestColumn;
-				return;
 				if($highestColumn == 'I')
 				{
 					//get first row
@@ -474,7 +489,7 @@ class IncomingSpec extends CW_Controller
 											{
 												$nominaValue = substr($rowData[0][7], 0, -1);
 											}									
-											$unit = 5;
+											$unit = 8;
 										}
 										//type = Capacitor
 										elseif($type == 2)
@@ -543,7 +558,7 @@ class IncomingSpec extends CW_Controller
 												$unit = 12;
 												break;
 											default:
-												$errDetail .= $nominaValueTitle.',';
+												$errDetail .= $nominaValueTitle.' Unit should one of (Ω/kΩ/MΩ/GΩ/mh/uh/nh/pF/uF/nF) or null,';
 												break;
 										}
 									}
@@ -583,13 +598,13 @@ class IncomingSpec extends CW_Controller
 												$unit = 12;
 												break;
 											default:
-												$errDetail .= $nominaValueTitle.',';
+												$errDetail .= $nominaValueTitle.' Unit should one of(Ω/kΩ/MΩ/GΩ/mh/uh/nh/pF/uF/nF) or null,';
 												break;
 										}
 									}
 									else
 									{
-										$errDetail .= $nominaValueTitle.',';
+										$errDetail .= $nominaValueTitle.' incrrect formart,';
 									}
 								}
 								else
@@ -633,6 +648,11 @@ class IncomingSpec extends CW_Controller
 											elseif(is_numeric(substr($rowData[0][8], 3, -2)))
 											{
 												$toleranceNum = substr($rowData[0][8], 3, -2);
+												$tolerance = $toleranceNum/$nominaValue*100;
+											}
+											elseif(is_numeric(substr($rowData[0][8], 3, -3)))
+											{
+												$toleranceNum = substr($rowData[0][8], 3, -3);
 												$tolerance = $toleranceNum/$nominaValue*100;
 											}
 											else
