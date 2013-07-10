@@ -263,12 +263,22 @@ class IncomingSpec extends CW_Controller
 		
 		if($err != '')
 		{
+			
 			$incomingRecordSql = "SELECT a.*,b.id AS unitid
 							  FROM incomingspec a
 						      JOIN unit b ON a.unit = b.id
 						      AND a.id = ".$incomingSpecId;
 			$incomingRecordObj = $this->db->query($incomingRecordSql);
 			$incomingRecord = $incomingRecordObj->first_row("array");
+			
+			//取得单位
+			$unitObj = $this->db->query("SELECT a.* FROM unit a
+										JOIN type b ON a.type = b.id
+										AND b.id = ".$incomingRecord['type']);
+			$unitArrEdit = $unitObj->result_array();
+			$unitArrEdit = $this->array_switch($unitArrEdit,"name");
+			$this->smarty->assign("unitArrEdit",$unitArrEdit);
+			
 			$this->smarty->assign("incomingRecord",$incomingRecord);
 			$this->smarty->assign("errmesg",$err);
 			$this->smarty->assign("currenmenu","incomingspect");
