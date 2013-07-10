@@ -20,5 +20,5 @@
 <!--{/block}-->
 
 <!--{block name=body}-->
-
+<!--{$output}-->
 <!--{/block}-->

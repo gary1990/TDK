@@ -140,10 +140,8 @@
 				  </ul>
 				</div>
 				<div>&nbsp;</div>
-				<div>
-					<!--{block name=body}-->
-					<!--{/block}-->
-				</div>
+				<!--{block name=body}-->
+				<!--{/block}-->
 			</div>
 		</div>
 	</body>

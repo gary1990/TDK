@@ -1,28 +1,26 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2013-07-08 12:42:35
+<?php /* Smarty version Smarty-3.1.8, created on 2013-07-10 15:15:18
          compiled from "application/views/templates\user.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1002651d4618d4f0934-05348535%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:2793651dd0a06453025-19061747%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '4333bf0f542e48feedebaa7b9796c73b65c791d7' => 
     array (
       0 => 'application/views/templates\\user.tpl',
-      1 => 1372784462,
+      1 => 1373440220,
       2 => 'file',
     ),
     '0a09857ede85b02bbc4dd7a34cfdea24f1afa9f0' => 
     array (
       0 => 'application/views/templates\\default.tpl',
-      1 => 1373253266,
+      1 => 1373440474,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1002651d4618d4f0934-05348535',
+  'nocache_hash' => '2793651dd0a06453025-19061747',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_51d4618d5e6db9_55097718',
   'variables' => 
   array (
     'commonHead' => 0,
@@ -32,8 +30,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'currenmenu' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.8',
+  'unifunc' => 'content_51dd0a0653adc4_28913796',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_51d4618d5e6db9_55097718')) {function content_51d4618d5e6db9_55097718($_smarty_tpl) {?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?php if ($_valid && !is_callable('content_51dd0a0653adc4_28913796')) {function content_51dd0a0653adc4_28913796($_smarty_tpl) {?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<?php echo $_smarty_tpl->tpl_vars['commonHead']->value;?>
@@ -211,12 +211,10 @@ index.php/inspector">
 				  </ul>
 				</div>
 				<div>&nbsp;</div>
-				<div>
-					
+				
 <?php echo $_smarty_tpl->tpl_vars['output']->value;?>
 
 
-				</div>
 			</div>
 		</div>
 	</body>

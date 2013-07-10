@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2013-07-10 14:42:39
+<?php /* Smarty version Smarty-3.1.8, created on 2013-07-10 15:15:15
          compiled from "application/views/templates\incomingSpec.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:114751d45a32bec288-17794882%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3040651dd0a03c17574-31223222%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -13,16 +13,14 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0a09857ede85b02bbc4dd7a34cfdea24f1afa9f0' => 
     array (
       0 => 'application/views/templates\\default.tpl',
-      1 => 1373253266,
+      1 => 1373440474,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '114751d45a32bec288-17794882',
+  'nocache_hash' => '3040651dd0a03c17574-31223222',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_51d45a32d2a772_87529676',
   'variables' => 
   array (
     'commonHead' => 0,
@@ -32,8 +30,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'currenmenu' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.8',
+  'unifunc' => 'content_51dd0a03d62486_96744113',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_51d45a32d2a772_87529676')) {function content_51d45a32d2a772_87529676($_smarty_tpl) {?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?php if ($_valid && !is_callable('content_51dd0a03d62486_96744113')) {function content_51dd0a03d62486_96744113($_smarty_tpl) {?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<?php echo $_smarty_tpl->tpl_vars['commonHead']->value;?>
@@ -248,8 +248,7 @@ index.php/inspector">
 				  </ul>
 				</div>
 				<div>&nbsp;</div>
-				<div>
-					
+				
 <div class="span-64 last subitems">
 	<a href="<?php echo site_url();?>
 /incomingSpec/createGet/">Add</a>
@@ -320,7 +319,6 @@ $_smarty_tpl->tpl_vars['incomingspec']->_loop = true;
 	</div>
 </div>
 
-				</div>
 			</div>
 		</div>
 	</body>
