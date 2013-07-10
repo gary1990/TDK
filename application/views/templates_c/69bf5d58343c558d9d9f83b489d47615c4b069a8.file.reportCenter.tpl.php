@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2013-07-10 14:06:18
+<?php /* Smarty version Smarty-3.1.8, created on 2013-07-10 14:45:26
          compiled from "application/views/templates\reportCenter.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:744951d465de459ae6-26358603%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '69bf5d58343c558d9d9f83b489d47615c4b069a8' => 
     array (
       0 => 'application/views/templates\\reportCenter.tpl',
-      1 => 1373436376,
+      1 => 1373438726,
       2 => 'file',
     ),
     '0a09857ede85b02bbc4dd7a34cfdea24f1afa9f0' => 
@@ -225,13 +225,13 @@ resource/js/calendar/ui.datepicker.js"></script>
 		};
 		var series2 =
 		{
-			name : 'limitline2',
+			name : 'Max',
 			data : [],
 			pointWidth : 14
 		};
 		var series1 =
 		{
-			name : 'limitline1',
+			name : 'Min',
 			data : [],
 			pointWidth : 14,
 			dataLabels :

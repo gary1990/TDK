@@ -83,13 +83,13 @@
 		};
 		var series2 =
 		{
-			name : 'limitline2',
+			name : 'Max',
 			data : [],
 			pointWidth : 14
 		};
 		var series1 =
 		{
-			name : 'limitline1',
+			name : 'Min',
 			data : [],
 			pointWidth : 14,
 			dataLabels :
