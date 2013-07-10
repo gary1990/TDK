@@ -105,7 +105,7 @@
 	{$CI->pagination->create_links()}
 	<div style="text-align: right;">
 		<a href="#">Download Application</a>
-		<a href="{site_url()}/incomingSpec/downloadTemplete">Download Templete</a>
+		<a href="{site_url()}/incomingSpec/downloadTemplate">Download Templete</a>
 		<input class="importConfig" type="button" value="Import"/>
 		<input class="exportConfig" type="button" value="Export"/>
 	</div>
