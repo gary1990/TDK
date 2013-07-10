@@ -309,6 +309,8 @@ class IncomingSpec extends CW_Controller
 				$toleranceNum = '';
 				$adjust = '';
 				//check col num
+				echo $highestColumn;
+				return;
 				if($highestColumn == 'I')
 				{
 					//get first row

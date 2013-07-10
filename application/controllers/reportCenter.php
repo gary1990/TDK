@@ -59,11 +59,11 @@ class ReportCenter extends CW_Controller
 					  JOIN unit c ON b.unit = c.id ".$partnoSql.$starttimeSql.$endtimeSql;
 			$resultObj = $this->db->query($resultSql);
 			$resultArr = $resultObj->result_array();
-			
+
 			foreach ($resultArr as $value)
 			{
 				$measvlaue = $value['measvlaue'];
-				for($i = 1; $i < strlen($measvlaue); $i++)
+				for($i = 0; $i < 5; $i++)
 				{
 					$measvlaue = substr($measvlaue, 0, strlen($measvlaue)-1);
 					if(is_numeric($measvlaue))
@@ -81,7 +81,6 @@ class ReportCenter extends CW_Controller
 				$limitLine2[$value['testTime']] = $value['nominalvalue']+$value['tolerancenum'];
 			}
 		}
-		
 		$this->smarty->assign("resultList",$resultList);
 		$this->smarty->assign("limitLine1",$limitLine1);
 		$this->smarty->assign("limitLine2",$limitLine2);

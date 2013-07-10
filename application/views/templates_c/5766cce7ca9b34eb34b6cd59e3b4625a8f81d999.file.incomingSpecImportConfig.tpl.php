@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2013-07-06 13:19:58
+<?php /* Smarty version Smarty-3.1.8, created on 2013-07-09 14:24:02
          compiled from "application/views/templates\incomingSpecImportConfig.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3230551d52ef687c447-41560681%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -13,7 +13,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0a09857ede85b02bbc4dd7a34cfdea24f1afa9f0' => 
     array (
       0 => 'application/views/templates\\default.tpl',
-      1 => 1373009154,
+      1 => 1373253266,
       2 => 'file',
     ),
   ),
@@ -48,7 +48,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <title>Incoming Spec Import</title>	
 
 		<style>
-			img
+			#logoimg
 			{
 				height:30px;
 				width:150px;
@@ -159,7 +159,7 @@ resource/img/right.png") no-repeat right top;
 	<body class="cldn">
 		<div class="container">
 			<div class="span-64 last defaulttitle">
-				<img src="<?php echo base_url();?>
+				<img id="logoimg" src="<?php echo base_url();?>
 resource/img/tdkEpcosLogo.gif"/>
 				<span class="span-45 inlineblock middletitle">Incoming Inspection and Quality Control</span>
 				<span class="inlineblock"><?php echo $_smarty_tpl->tpl_vars['CI']->value->session->userdata('username');?>

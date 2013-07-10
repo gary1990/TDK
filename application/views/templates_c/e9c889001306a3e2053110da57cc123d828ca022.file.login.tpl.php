@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2013-07-05 16:15:07
+<?php /* Smarty version Smarty-3.1.8, created on 2013-07-09 14:11:09
          compiled from "application/views/templates\login.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:81851d4da5cb7bb39-32400503%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'e9c889001306a3e2053110da57cc123d828ca022' => 
     array (
       0 => 'application/views/templates\\login.tpl',
-      1 => 1373012036,
+      1 => 1373350266,
       2 => 'file',
     ),
   ),
@@ -79,12 +79,13 @@ resource/js/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
 			.button1{
 				cursor:pointer;
 				color:white;
-				background-color:#001429;
+				background-color:blue;
 				border: 0;
 				border-radius:5px;
-				width:75px;
+				width:85px;
 				height:25px;
 				font-size:16px;
+				font-weight: bold;
 			}
 			.inline{
 				margin-right:20px;
@@ -169,7 +170,7 @@ resource/js/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
 " method="post">
 							<div class="clear prepend-1">
 								<div class="locWhite locMid label1">
-									User Name
+									
 								</div>
 							</div>
 							<div class="clear prepend-1 span-11 inline append-bottom10">
@@ -183,7 +184,7 @@ resource/js/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
 							</div>
 							<div class="clear prepend-1">
 								<div class="locWhite locMid label1">
-									Pass Word
+									
 								</div>
 							</div>
 							<div class="clear prepend-1 span-11 inline append-bottom20">
@@ -226,7 +227,7 @@ resource/js/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
 				<div class="clear prepend-20 span-21">
 					<img src="<?php echo base_url();?>
 resource/img/gemcycle.png"/>
-					<span>Powered by Gemcycle</span>
+					<span>1.0Powered by Gemcycle</span>
 				</div>
 			</div>
 		</div>
