@@ -290,7 +290,12 @@ class Login extends CW_Controller
 		else
 		{
 			//保存上传文件
-			$file_temp = $_FILES['file']['tmp_name'];
+			$file_temp = @$_FILES['file']['tmp_name'];
+			if($file_temp == '')
+			{
+				$this->_returnUploadFailed("file uploaded failed");
+				return;
+			}
 			date_default_timezone_set('Asia/Shanghai');
 			$dateStamp = date("Y_m_d");
 			$dateStampFolder = $uploadRoot.$slash.$dateStamp;
@@ -305,7 +310,7 @@ class Login extends CW_Controller
 				}
 				else
 				{
-					$this->_returnUploadFailed("Time folder created fail.");
+					$this->_returnUploadFailed("time folder created failed");
 					return;
 				}
 			}
@@ -316,8 +321,12 @@ class Login extends CW_Controller
 
 			if (!$filestatus)
 			{
-				$this->_returnUploadFailed("File:".$_FILES['file']['name']."uploaded fail");
+				$this->_returnUploadFailed("file save failed");
 				return;
+			}
+			else
+			{
+				//do noting
 			}
 			//解压缩文件
 			if (PHP_OS == 'WINNT')
@@ -339,23 +348,12 @@ class Login extends CW_Controller
 				}
 				else
 				{
-					$this->_returnUploadFailed("File:".$_FILES['file']['name']."opened fail");
+					$this->_returnUploadFailed("zip file uncompress failed");
 					return;
 				}
 			}			
 			
-			$handle = '';
-			$handle1 = @fopen($uploadRoot.$slash.$dateStamp.$slash.substr($_FILES['file']['name'], 0, -4).$slash.'TestResult_Pass.csv', "r");
-			$handle2 = @fopen($uploadRoot.$slash.$dateStamp.$slash.substr($_FILES['file']['name'], 0, -4).$slash.'TestResult_Fail.csv', "r");
-			
-			if($handle1)
-			{
-				$handle = $handle1;
-			}
-			else
-			{
-				$handle = $handle2;
-			}
+			$handle = @fopen($uploadRoot.$slash.$dateStamp.$slash.substr($_FILES['file']['name'], 0, -4).$slash.'TestResult.csv', "r");
 			
 			//解析文件并插入数据库
 			$this->db->trans_start();
@@ -383,7 +381,7 @@ class Login extends CW_Controller
 					if ($tmpRes->num_rows() == 0)
 					{
 						$this->db->trans_rollback();
-						$this->_returnUploadFailed("File:".$_FILES['file']['name']." in .csv file(".$buffer.") can not find such inspector");
+						$this->_returnUploadFailed("can not find such inspector");
 						return;
 					}
 					else
@@ -396,7 +394,7 @@ class Login extends CW_Controller
 					if ($tmpRes->num_rows() == 0)
 					{
 						$this->db->trans_rollback();
-						$this->_returnUploadFailed("File:".$_FILES['file']['name']."in .csv(".$buffer.") can not find such Part No.");
+						$this->_returnUploadFailed("can not find such Part No.");
 						return;
 					}
 					else
@@ -433,7 +431,7 @@ class Login extends CW_Controller
 					else
 					{
 						$this->db->trans_rollback();
-						$this->_returnUploadFailed("File:".$_FILES['file']['name']."in .csv(".$buffer.")insert into testresultinfo Failed");
+						$this->_returnUploadFailed("insert into testresultinfo failed");
 						return;
 					}
 				}
@@ -441,7 +439,7 @@ class Login extends CW_Controller
 			}
 			else
 			{
-				$this->_returnUploadFailed("File:.csv File Open Failed");
+				$this->_returnUploadFailed("TestResult.csv file open failed");
 				return;
 			}
 		}
