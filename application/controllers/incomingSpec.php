@@ -855,8 +855,8 @@ class IncomingSpec extends CW_Controller
 	public function downloadTemplete()
 	{
 		$root = getcwd();
-		$fileRoot = $root."\\doc\\templete.xls";
-		$fileName = "templete.xls";
+		$fileRoot = $root."\\doc\\template.xls";
+		$fileName = "template.xls";
 		
 		if(!file_exists($fileRoot))
 		{
