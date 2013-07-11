@@ -84,6 +84,7 @@ class InspectResult extends CW_Controller
 		$resultArr = $resultObj->result_array();
 		
 		$totalcount = count($resultArr);
+		$this->smarty->assign('totalcount',$totalcount);
 		$this->load->library('pagination');
 		$config['full_tag_open'] = '<div class="locPage">';
 		$config['full_tag_close'] = '</div>';

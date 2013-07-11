@@ -56,10 +56,29 @@
 		
 		$(".exportBtn").click(function(e){
 			e.preventDefault();
-			var site_url = $(".siteurl").val();
-			var url = site_url+'/inspectResult/exportResult';
-			$("#searchForm").attr('action', url);
-			$("#searchForm").submit();
+			var totalcount = $('.totalcount').val();
+			if(totalcount > 500)
+			{
+				var r = confirm("More than "+totalcount+"will be exported,sure to export?");
+				if (r == true)
+			    {
+					var site_url = $(".siteurl").val();
+					var url = site_url+'/inspectResult/exportResult';
+					$("#searchForm").attr('action', url);
+					$("#searchForm").submit();
+			    }
+			  	else
+			    {
+					//
+			    }
+			}
+			else
+			{
+				var site_url = $(".siteurl").val();
+				var url = site_url+'/inspectResult/exportResult';
+				$("#searchForm").attr('action', url);
+				$("#searchForm").submit();
+			}
 		});
 	});
 	
@@ -157,6 +176,7 @@
 				</tr>
 			{/foreach}
 		</table>
+		<input type='hidden' class="totalcount" value="{$totalcount|default:''}" />
 		<input class="siteurl" type="hidden" value="{site_url()}"/>
 		{$CI->pagination->create_links()}
 		<div style="text-align: right;">
