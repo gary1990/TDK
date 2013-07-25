@@ -80,6 +80,31 @@
 				$("#searchForm").submit();
 			}
 		});
+		
+		$(".totalcheckbox").click(function(){
+			var check = $(this).attr("checked");
+			if(check == 'checked')
+			{
+				$('.recordcheckbox').attr("checked","checked");
+			}
+			else
+			{
+				$('.recordcheckbox').removeAttr("checked");
+			}
+		});
+		
+		$(".deleterecord").click(function(e){
+			e.preventDefault();
+			var result = confirm("You sure to DELETE selected records?");
+			if(result)
+			{
+				$("#inspectResultForm").submit();
+			}
+			else
+			{
+				//do nothing
+			}
+		});
 	});
 	
 	jQuery(function($)
@@ -140,46 +165,66 @@
 		</form>
 	</div>
 	<div>
-		<table>
-			<tr>
-				<th>No</th>
-				<th>Time</th>
-				<th>Part No.</th>
-				<th>Type</th>
-				<th>Meas. Value</th>
-				<th>Result</th>
-				<th>Batch No.</th>
-				<th>Supplier</th>
-				<th>Inspector</th>
-				<th>Nominal/Tol</th>
-			</tr>
-			{foreach from=$resultArr item=value name=resultforeach}
-				<tr>
-					<td>{$smarty.foreach.resultforeach.index+1}</td>
-					<td>{$value['testTime']}</td>
-					<td>{$value['partno']}</td>
-					<td>{$value['typename']}</td>
-					<td>{$value['measvlaue']}</td>
-					<td>
-						{if $value['result'] eq 1}
-							<span style="color:green;">Pass</span>
+		<form id="inspectResultForm" action="{site_url()}/inspectResult/inspectResultPost/" method="post">
+			<div style="width: 960px; overflow: auto; margin-bottom: 10px;">
+				<table>
+					<tr>
+						{if $CI->session->userdata('rolename') eq 'Admin'}
+							<th>&nbsp;</th>
 						{else}
-							<span style="color:red;">Fail</span>
 						{/if}
-					</td>
-					<td>{$value['betchno']}</td>
-					<td>{$value['supplier']}</td>
-					<td>{$value['inspector']}</td>
-					<td>
-						{$value['nominalvalue']}+/-{$value['tolerancenum']}{$value['unitname']}
-					</th>
-				</tr>
-			{/foreach}
-		</table>
+						<th>No</th>
+						<th>Time</th>
+						<th>Part No.</th>
+						<th>Type</th>
+						<th>Meas. Value</th>
+						<th>Result</th>
+						<th>Batch No.</th>
+						<th>Supplier</th>
+						<th>Inspector</th>
+						<th>Nominal/Tol</th>
+					</tr>
+					{counter name="numcounter" start=$offset skip=1 print=FALSE}
+					{foreach from=$resultArr item=value name=resultforeach}
+						<tr>
+							{if $CI->session->userdata('rolename') eq 'Admin'}
+								<td><input class="recordcheckbox" name="checkbox{$value['id']}" type="checkbox"></td>
+							{else}
+							{/if}
+							<td>{counter name="numcounter"}</td>
+							<td>{$value['testTime']}</td>
+							<td>{$value['partno']}</td>
+							<td>{$value['typename']}</td>
+							<td>{$value['measvlaue']}</td>
+							<td>
+								{if $value['result'] eq 1}
+									<span style="color:green;">Pass</span>
+								{else}
+									<span style="color:red;">Fail</span>
+								{/if}
+							</td>
+							<td>{$value['betchno']}</td>
+							<td>{$value['supplier']}</td>
+							<td>{$value['inspector']}</td>
+							<td>
+								{$value['nominalvalue']}+/-{$value['tolerancenum']}{$value['unitname']}
+							</th>
+						</tr>
+					{/foreach}
+				</table>
+			</div>
+		</form>
 		<input type='hidden' class="totalcount" value="{$totalcount|default:''}" />
 		<input class="siteurl" type="hidden" value="{site_url()}"/>
 		{$CI->pagination->create_links()}
-		<div style="text-align: right;">
+		<div style="margin-top: 20px;">
+			{if $CI->session->userdata('rolename') eq 'Admin'}
+				<input class="totalcheckbox" type="checkbox">Select all
+				<a class="deleterecord" href="#">Delete</a>
+			{else}
+			{/if}
+		</div>
+		<div style="text-align: right;margin-bottom: 30px;">
 			<input class="exportBtn" type="button" value="Export"/>
 		</div>
 	</div>

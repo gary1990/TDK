@@ -12,8 +12,11 @@ class IncomingSpec extends CW_Controller
 		//三种类型
 		$typeObj = $this->db->query("SELECT * FROM type");
 		$typeArr = $typeObj->result_array();
+		$typeArrWithAll = $this->array_switch2($typeArr, 'name', '(ALL)');
 		$typeArr = $this->array_switch($typeArr,"name");
 		$this->smarty->assign("typeArr",$typeArr);
+		$this->smarty->assign("typeArrWithAll",$typeArrWithAll);
+		
 		//取得单位
 		$unitObj = $this->db->query("SELECT * FROM unit");
 		$unitArr = $unitObj->result_array();
@@ -27,12 +30,145 @@ class IncomingSpec extends CW_Controller
 		$this->smarty->assign("freqUnitArr",$freqUnitArr);
 	}
 	
-	public function index($offset = 0, $limit = 30)
+	public function index($offset = 0, $order = null, $limit = 30)
 	{
+		//取得PartNo
+		$partNoObj = $this->db->query("SELECT DISTINCT a.partno
+									   FROM incomingspec a
+									  ");
+		$partNoArr = $partNoObj->result_array();
+		$partNoArr = $this->array_switch1($partNoArr, 'partno', '(ALL)');
+		$this->smarty->assign("partNoArr",$partNoArr);
+		//取得Supplier
+		$supplierObj = $this->db->query("SELECT DISTINCT a.supplier
+										 FROM incomingspec a
+										");
+		$supplierArr = $supplierObj->result_array();
+		$supplierArr = $this->array_switch1($supplierArr, 'supplier', '(ALL)');
+		$this->smarty->assign("supplierArr",$supplierArr);
+		
+		$partnoSql = '';
+		$partNo = emptyToNull($this->input->post("partno"));
+		if($partNo != "")
+		{
+			$partnoSql = " AND a.partno = '".$partNo."'";
+		}
+		$supplierSql = '';
+		$supplier = emptyToNull($this->input->post("supplier"));
+		if($supplier != "")
+		{
+			$supplierSql = " AND a.supplier = '".$supplier."'";
+		}
+		$typeSql = '';
+		$type = emptyToNull($this->input->post("type"));
+		if($type != '')
+		{
+			$typeSql = " AND a.type = ".$type;
+		}
+		$orderSql = '';
+		$assignorderby = $order;
+		switch ($order) 
+		{
+			case null:
+				$orderSql = ' ORDER BY a.id DESC';
+				break;
+			case 'partno':
+				$orderSql = ' ORDER BY a.partno ASC';
+				$assignorderby = 'partnodesc';
+				break;
+			case 'partnodesc':
+				$orderSql = ' ORDER BY a.partno DESC';
+				$assignorderby = 'partno';
+				break;
+			case 'supplier':
+				$orderSql = ' ORDER BY a.supplier ASC';
+				$assignorderby = 'supplierdesc';
+				break;
+			case 'supplierdesc':
+				$orderSql = ' ORDER BY a.supplier DESC';
+				$assignorderby = 'supplier';
+				break;
+			case 'description':
+				$orderSql = ' ORDER BY a.description ASC';
+				$assignorderby = 'descriptiondesc';
+				break;
+			case 'descriptiondesc':
+				$orderSql = ' ORDER BY a.description DESC';
+				$assignorderby = 'description';
+				break;
+			case 'type':
+				$orderSql = ' ORDER BY c.name ASC';
+				$assignorderby = 'typedesc';
+				break;
+			case 'typedesc':
+				$orderSql = ' ORDER BY c.name DESC';
+				$assignorderby = 'type';
+				break;
+			case 'testvoltage':
+				$orderSql = ' ORDER BY a.testvoltage ASC';
+				$assignorderby = 'testvoltagedesc';
+				break;
+			case 'testvoltagedesc':
+				$orderSql = ' ORDER BY a.testvoltage DESC';
+				$assignorderby = 'testvoltage';
+				break;
+			case 'testfrequency':
+				$orderSql = ' ORDER BY a.testfrequency ASC';
+				$assignorderby = 'testfrequencydesc';
+				break;
+			case 'testfrequencydesc':
+				$orderSql = ' ORDER BY a.testfrequency DESC';
+				$assignorderby = 'testfrequency';
+				break;
+			case 'residualinductance':
+				$orderSql = ' ORDER BY a.residualinductance ASC';
+				$assignorderby = 'residualinductancedesc';
+				break;
+			case 'residualinductancedesc':
+				$orderSql = ' ORDER BY a.residualinductance DESC';
+				$assignorderby = 'residualinductance';
+				break;
+			case 'nominalvalue':
+				$orderSql = ' ORDER BY a.nominalvalue ASC';
+				$assignorderby = 'nominalvaluedesc';
+				break;
+			case 'nominalvaluedesc':
+				$orderSql = ' ORDER BY a.nominalvalue DESC';
+				$assignorderby = 'nominalvalue';
+				break;
+			case 'unit':
+				$orderSql = ' ORDER BY b.name ASC';
+				$assignorderby = 'unitdesc';
+				break;
+			case 'unitdesc':
+				$orderSql = ' ORDER BY b.name DESC';
+				$assignorderby = 'unit';
+				break;
+			case 'tolerance':
+				$orderSql = ' ORDER BY a.tolerance ASC';
+				$assignorderby = 'tolerancedesc';
+				break;
+			case 'tolerancedesc':
+				$orderSql = ' ORDER BY a.tolerance DESC';
+				$assignorderby = 'tolerance';
+				break;
+			case 'tolerancenum':
+				$orderSql = ' ORDER BY a.tolerancenum ASC';
+				$assignorderby = 'tolerancenumdesc';
+				break;
+			case 'tolerancenumdesc':
+				$orderSql = ' ORDER BY a.tolerancenum DESC';
+				$assignorderby = 'tolerancenum';
+				break;
+			default:
+				break;
+		}
+		
 		$incomingspecSql = "SELECT a.*,b.name,c.name AS typename
 						    FROM incomingspec a
 						    JOIN unit b ON a.unit = b.id
-						    JOIN type c ON a.type = c.id";
+						    JOIN type c ON a.type = c.id"
+							.$partnoSql.$supplierSql.$typeSql.$orderSql;
 		$incomingspecObj = $this->db->query($incomingspecSql);
 		$incomingspecArr = $incomingspecObj->result_array();
 		
@@ -49,9 +185,30 @@ class IncomingSpec extends CW_Controller
 		$incomingspecObj = $this->db->query($incomingspecSql);
 		$incomingspecArr = $incomingspecObj->result_array();
 		
+
+		$this->smarty->assign("assignorderby",$assignorderby);
 		$this->smarty->assign("incomingspecArr",$incomingspecArr);
 		$this->smarty->assign("currenmenu","incomingspect");
 		$this->smarty->display("incomingSpec.tpl");
+	}
+	
+	public function incomingSpecPost()
+	{
+		if(count($_POST) == 0)
+		{
+			$this->index();
+		}
+		else
+		{
+			$deleteId = '';
+			foreach ($_POST as $key => $value) 
+			{
+				$deleteId .= substr($key, 8).',';
+			}
+			$deleteId = substr($deleteId, 0, -1);
+			$this->db->query("DELETE FROM incomingspec WHERE id IN (".$deleteId.")");
+			$this->index();
+		}
 	}
 	
 	public function createGet()
@@ -157,6 +314,13 @@ class IncomingSpec extends CW_Controller
 		}
 		if($err != '')
 		{
+			//取得单位
+			$unitObj = $this->db->query("SELECT a.* FROM unit a
+										JOIN type b ON a.type = b.id
+										AND b.name = 'Ind' ");
+			$unitArrCreat = $unitObj->result_array();
+			$unitArrCreat = $this->array_switch($unitArrCreat,"name");
+			$this->smarty->assign("unitArrCreat",$unitArrCreat);
 			$this->smarty->assign("errmesg",$err);
 			$this->smarty->assign("currenmenu","incomingspect");
 			$this->smarty->display("incomingSpecCreate.tpl");
@@ -412,6 +576,18 @@ class IncomingSpec extends CW_Controller
 						//error detail
 						$errDetailTotal = '';
 						$valSql = '';
+						$partnoArr = array();
+						//partno in db
+						$partnoArrDbObj = $this->db->query("SELECT 
+															DISTINCT a.partno
+															FROM incomingspec a
+														   ");
+						$partnoArrDb = $partnoArrDbObj->result_array();
+						$partnoInDb = array();
+						foreach ($partnoArrDb as $key => $value) 
+						{
+							array_push($partnoInDb,$value['partno']);
+						}
 						//  Loop through each row of the worksheet in turn
 						for ($row = 2; $row <= $highestRow; $row++)
 						{
@@ -419,24 +595,36 @@ class IncomingSpec extends CW_Controller
 							
 						    $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
 							
-							if($rowData[0][0] == '' && $rowData[0][1] == '' && $rowData[0][2] == '' && $rowData[0][3] == '' && $rowData[0][4] == '' && $rowData[0][5] == '' && $rowData[0][6] == '' && $rowData[0][7] == '' && $rowData[0][8] == '')
+							if(trim($rowData[0][0]) == '' && trim($rowData[0][1]) == '' && trim($rowData[0][2]) == '' && $rowData[0][3] == '' && $rowData[0][4] == '' && $rowData[0][5] == '' && $rowData[0][6] == '' && $rowData[0][7] == '' && $rowData[0][8] == '')
 							{
 								//
 							}
 							else
 							{
-								if($rowData[0][0] != '')
+								if(trim($rowData[0][0]) != '')
 							    {
-							    	$partNo = $rowData[0][0];
+							    	$partNo = trim($rowData[0][0]);
+									if(in_array($partNo, $partnoArr))
+									{
+										$errDetail .= $partNoTitle.' already exist in your excel file,';
+									}
+									else
+									{
+										array_push($partnoArr,$partNo);
+										if(in_array($partNo, $partnoInDb))
+										{
+											$errDetail .= $partNoTitle.' already exist in your system,';
+										}
+									}
 							    }
 							    else
 							    {
 							    	$errDetail .= $partNoTitle.',';
 							    }
 								
-								if($rowData[0][1] != '')
+								if(trim($rowData[0][1]) != '')
 								{
-									$supplier = $rowData[0][1];
+									$supplier = trim($rowData[0][1]);
 								}
 								else
 								{
@@ -445,15 +633,15 @@ class IncomingSpec extends CW_Controller
 								
 								$description = $rowData[0][2];
 								
-								switch ($rowData[0][3]) 
+								switch (strtolower(trim($rowData[0][3]))) 
 								{
-									case 'Inductor':
+									case 'inductor':
 										$type = 1;
 										break;
-									case 'Resistor':
+									case 'resistor':
 										$type = 3;
 										break;
-									case 'Capacitor':
+									case 'capacitor':
 										$type = 2;
 										break;
 									default:
@@ -461,69 +649,101 @@ class IncomingSpec extends CW_Controller
 										break;
 								}
 	
-								$voltage = $rowData[0][4];
+								$voltage = trim($rowData[0][4]);
 								
 								if($voltage != '')
 								{
-									if($voltage == 'NA')
+									if(strtolower($voltage) == 'na')
 									{
 										$voltage = '';
 									}
 									else
 									{
 										$voltageVal = substr($voltage, 0, -3);
-										$voltageUnit = substr($voltage, -3);
-										if(!(is_numeric($voltageVal) && $voltageUnit == 'Vdc'))
+										$voltageUnit = strtolower(substr($voltage, -3));
+										if(!(is_numeric($voltageVal) && $voltageUnit == 'vdc'))
 										{
 											$errDetail .= $voltageTitle.',';
 										}
 									}
 								}
 								
-								$frquency = $rowData[0][5];
-								
-								$nominaValue = $rowData[0][7];
-								
-								if($rowData[0][7] != '')
+								$frquency = trim($rowData[0][5]);
+								if($frquency != '')
 								{
-									if(is_numeric($rowData[0][7]) || is_numeric(substr($rowData[0][7], 0, -1)))
+									if(strtolower($frquency) == 'na')
+									{
+										$frquency = '';
+									}
+									else
+									{
+										$frquencyVal = substr($frquency, 0, -3);
+										$frquencyUnit = strtolower(substr($frquency, -3));
+										$frquencyUnitArr = array('khz','mhz','ghz');
+										if(is_numeric($frquencyVal) && in_array($frquencyUnit , $frquencyUnitArr))
+										{
+											if($frquencyUnit == 'khz')
+											{
+												$frquency = $frquencyVal.'kHz';
+											}
+											elseif($frquencyUnit == 'mhz')
+											{
+												$frquency = $frquencyVal.'MHz';
+											}
+											else
+											{
+												$frquency = $frquencyVal.'GHz';
+											}
+										}
+										else
+										{
+											$errDetail .= $frquencyTitle.',';
+										}
+									}
+								}
+								
+								$nominaValue = trim($rowData[0][7]);
+								
+								if($nominaValue != '')
+								{
+									if(is_numeric($nominaValue) || is_numeric(substr($nominaValue, 0, -1)))
 									{
 										// type = Inductor
 										if($type == 1)
 										{
-											if(is_numeric($rowData[0][7]))
+											if(is_numeric($nominaValue))
 											{
-												$nominaValue = $rowData[0][7];
+												$nominaValue = $nominaValue;
 											}
 											else
 											{
-												$nominaValue = substr($rowData[0][7], 0, -1);
+												$nominaValue = substr($nominaValue, 0, -1);
 											}									
 											$unit = 8;
 										}
 										//type = Capacitor
 										elseif($type == 2)
 										{
-											if(is_numeric($rowData[0][7]))
+											if(is_numeric($nominaValue))
 											{
-												$nominaValue = $rowData[0][7];
+												$nominaValue = $nominaValue;
 											}
 											else
 											{
-												$nominaValue = substr($rowData[0][7], 0, -1);
+												$nominaValue = substr($nominaValue, 0, -1);
 											}							
 											$unit = 9;
 										}
 										//type = Resistor
 										else if($type == 3)
 										{
-											if(is_numeric($rowData[0][7]))
+											if(is_numeric($nominaValue))
 											{
-												$nominaValue = $rowData[0][7];
+												$nominaValue = $nominaValue;
 											}
 											else
 											{
-												$nominaValue = substr($rowData[0][7], 0, -1);
+												$nominaValue = substr($nominaValue, 0, -1);
 											}
 											$unit = 1;
 										}
@@ -532,84 +752,108 @@ class IncomingSpec extends CW_Controller
 											$errDetail .= $nominaValueTitle.',';
 										}
 									}
-									elseif(is_numeric(substr($rowData[0][7], 0, -2)))
+									elseif(is_numeric(substr($nominaValue, 0, -2)))
 									{
-										$nominaValue = substr($rowData[0][7], 0, -2);
+										$nominaValue = substr($nominaValue, 0, -2);
 										$part2 = substr($rowData[0][7], -2);
-										switch ($part2) {
-											case 'Ω':
+										$arrOhm = array('Ω','KΩ','kΩ','MΩ','mΩ','GΩ','gΩ');
+										if(in_array($part2, $arrOhm))
+										{
+											if($part2 == 'Ω')
+											{
 												$unit = 1;
-												break;
-											case 'kΩ':
+											}
+											elseif($part2 == 'kΩ' || $part2 == 'KΩ')
+											{
 												$unit = 2;
-												break;
-											case 'MΩ':
+											}
+											elseif($part2 == 'MΩ' || $part2 == 'mΩ')
+											{
 												$unit = 3;
-												break;
-											case 'GΩ':
+											}
+											else
+											{
 												$unit = 4;
-												break;
-											case 'mh':
-												$unit = 6;
-												break;
-											case 'uh':
-												$unit = 7;
-												break;
-											case 'nh':
-												$unit = 8;
-												break;
-											case 'pF':
-												$unit = 10;
-												break;
-											case 'uF':
-												$unit = 11;
-												break;
-											case 'nF':
-												$unit = 12;
-												break;
-											default:
-												$errDetail .= $nominaValueTitle.' Unit should one of (Ω/kΩ/MΩ/GΩ/mh/uh/nh/pF/uF/nF) or null,';
-												break;
+											}
+										}
+										else
+										{
+											$part2Lower = strtolower(substr(trim($rowData[0][7]), -2));
+											switch ($part2Lower) {
+												case 'mh':
+													$unit = 6;
+													break;
+												case 'uh':
+													$unit = 7;
+													break;
+												case 'nh':
+													$unit = 8;
+													break;
+												case 'pf':
+													$unit = 10;
+													break;
+												case 'uf':
+													$unit = 11;
+													break;
+												case 'nf':
+													$unit = 12;
+													break;
+												default:
+													$errDetail .= $nominaValueTitle.' Unit should one of (Ω/kΩ/MΩ/GΩ/mh/uh/nh/pF/uF/nF) or null,';
+													break;
+											}
 										}
 									}
-									elseif(is_numeric(substr($rowData[0][7], 0, -3)))
+									elseif(is_numeric(substr($nominaValue, 0, -3)))
 									{
-										$nominaValue = substr($rowData[0][7], 0, -3);
+										$nominaValue = substr($nominaValue, 0, -3);
 										$part2 = substr($rowData[0][7], -3);
-										switch ($part2) {
-											case 'Ω':
+										$arrOhm = array('Ω','KΩ','kΩ','MΩ','mΩ','GΩ','gΩ');
+										if(in_array($part2, $arrOhm))
+										{
+											if($part2 == 'Ω')
+											{
 												$unit = 1;
-												break;
-											case 'kΩ':
+											}
+											elseif($part2 == 'kΩ' || $part2 == 'KΩ')
+											{
 												$unit = 2;
-												break;
-											case 'MΩ':
+											}
+											elseif($part2 == 'MΩ' || $part2 == 'mΩ')
+											{
 												$unit = 3;
-												break;
-											case 'GΩ':
+											}
+											else
+											{
 												$unit = 4;
-												break;
-											case 'mh':
-												$unit = 6;
-												break;
-											case 'uh':
-												$unit = 7;
-												break;
-											case 'nh':
-												$unit = 8;
-												break;
-											case 'pF':
-												$unit = 10;
-												break;
-											case 'uF':
-												$unit = 11;
-												break;
-											case 'nF':
-												$unit = 12;
-												break;
-											default:
-												$errDetail .= $nominaValueTitle.' Unit should one of(Ω/kΩ/MΩ/GΩ/mh/uh/nh/pF/uF/nF) or null,';
-												break;
+											}
+										}
+										else
+										{
+											$part2Lower = strtolower(substr(trim($rowData[0][7]), -2));
+											switch ($part2Lower) {
+												case 'mh':
+													$unit = 6;
+													break;
+												case 'uh':
+													$unit = 7;
+													break;
+												case 'nh':
+													$unit = 8;
+													break;
+												case 'pf':
+													$unit = 10;
+													break;
+												case 'uf':
+													$unit = 11;
+													break;
+												case 'nf':
+													$unit = 12;
+													break;
+												default:
+													$errDetail .= $nominaValueTitle.' Unit should one of (Ω/kΩ/MΩ/GΩ/mh/uh/nh/pF/uF/nF) or null,';
+													break;
+											}
 										}
 									}
 									else
@@ -648,22 +892,50 @@ class IncomingSpec extends CW_Controller
 											if(is_numeric(substr($rowData[0][8], 3)))
 											{
 												$toleranceNum = substr($rowData[0][8], 3);
-												$tolerance = $toleranceNum/$nominaValue*100;
+												if($nominaValue == 0)
+												{
+													$tolerance = '';
+												}
+												else
+												{
+													$tolerance = $toleranceNum/$nominaValue*100;
+												}
 											}
 											elseif(is_numeric(substr($rowData[0][8], 3, -1)))
 											{
 												$toleranceNum = substr($rowData[0][8], 3, -1);
-												$tolerance = $toleranceNum/$nominaValue*100;
+												if($nominaValue == 0)
+												{
+													$tolerance = '0';
+												}
+												else
+												{
+													$tolerance = $toleranceNum/$nominaValue*100;
+												}	
 											}
 											elseif(is_numeric(substr($rowData[0][8], 3, -2)))
 											{
 												$toleranceNum = substr($rowData[0][8], 3, -2);
-												$tolerance = $toleranceNum/$nominaValue*100;
+												if($nominaValue == 0)
+												{
+													$tolerance = '0';
+												}
+												else
+												{
+													$tolerance = $toleranceNum/$nominaValue*100;
+												}
 											}
 											elseif(is_numeric(substr($rowData[0][8], 3, -3)))
 											{
 												$toleranceNum = substr($rowData[0][8], 3, -3);
-												$tolerance = $toleranceNum/$nominaValue*100;
+												if($nominaValue == 0)
+												{
+													$tolerance = '';
+												}
+												else
+												{
+													$tolerance = $toleranceNum/$nominaValue*100;
+												}
 											}
 											else
 											{
@@ -677,7 +949,7 @@ class IncomingSpec extends CW_Controller
 									$errDetail .= $toleranceTitle.',';
 								}
 								
-								$adjust = $rowData[0][6];
+								$adjust = trim($rowData[0][6]);
 								
 								if($type !== 1)
 								{
@@ -690,9 +962,23 @@ class IncomingSpec extends CW_Controller
 								{
 									if($adjust != '')
 									{
-										if(!is_numeric($adjust))
+										$adjustVal = '';
+										for ($i=0; $i < strlen($adjust); $i++) 
+										{ 
+											$adjustSub = substr($adjust, 0 ,strlen($adjust)-$i);
+											if(is_numeric($adjustSub))
+											{
+												$adjustVal = $adjustSub;
+												break;
+											}
+										}
+										if($adjustVal == '')
 										{
 											$errDetail .= $adjustTitle.',';
+										}
+										else
+										{
+											$adjust = $adjustVal;
 										}
 									}
 								}
@@ -947,6 +1233,26 @@ class IncomingSpec extends CW_Controller
 			$arr += array($val['id'] => $val[$var2]);
 		}
 		
+		return $arr;
+	}
+	
+	protected function array_switch1($var1, $var2, $var3)
+	{
+		$arr = array("" => $var3);
+		foreach ($var1 as $value) 
+		{
+			$arr = $arr + array($value[$var2] => $value[$var2]);
+		}
+		return $arr;
+	}
+	
+	protected function array_switch2($var1, $var2, $var3)
+	{
+		$arr = array("" => $var3);
+		foreach ($var1 as $value) 
+		{
+			$arr = $arr + array($value['id'] => $value[$var2]);
+		}
 		return $arr;
 	}
 }

@@ -70,7 +70,7 @@ class InspectResult extends CW_Controller
 		}
 		
 		$resultSql = "SELECT 
-					  a.testTime,a.measvlaue,a.result,a.betchno,a.imgurl,
+					  a.id,a.testTime,a.measvlaue,a.result,a.betchno,a.imgurl,
 					  b.partno,b.supplier,b.nominalvalue,b.tolerancenum,
 					  c.name AS typename,
 					  d.username AS inspector,
@@ -79,7 +79,8 @@ class InspectResult extends CW_Controller
 					  JOIN incomingspec b ON a.partno = b.id 
 					  JOIN type c ON b.type = c.id
 					  JOIN inspector d ON a.inspector = d.id
-					  JOIN unit e ON b.unit = e.id ".$testresultSql.$supplierSql.$typeSql.$batchNoSql.$timeFromSql.$timeToSql;
+					  JOIN unit e ON b.unit = e.id ".$testresultSql.$supplierSql.$typeSql.$batchNoSql.$timeFromSql.$timeToSql.
+					  " ORDER BY a.testTime DESC";
 		$resultObj = $this->db->query($resultSql);
 		$resultArr = $resultObj->result_array();
 		
@@ -97,41 +98,29 @@ class InspectResult extends CW_Controller
 		$resultObj = $this->db->query($resultSql);
 		$resultArr = $resultObj->result_array();
 		
+		$this->smarty->assign("offset",$offset);
 		$this->smarty->assign("resultArr",$resultArr);
 		$this->smarty->assign("currenmenu","inspectresult");
 		$this->smarty->display("inspectResult.tpl");
 	}
-	public function producttype()
+	
+	public function inspectResultPost()
 	{
-		$crud = new grocery_CRUD();
-		$crud->set_theme('datatables');
-		$crud->required_fields('status');
-		$crud->display_as('name', '产品型号')->display_as('status', '状态');
-		$crud->set_relation('status','status','statusname');
-		$crud->unset_delete();
-		
-		//新增，编辑时对产品型号的判断
-		$postUrl = $this->uri->uri_string();
-		if(strpos($postUrl, "insert_validation") != FALSE)
+		if(count($_POST) == 0)
 		{
-			$crud->set_rules('name','producttype','callback_add_producttype');
-		}
-		else if(strpos($postUrl, "update_validation") != FALSE)
-		{
-			$crud->set_rules('name','producttype','callback_edit_producttype');
+			$this->index();
 		}
 		else
 		{
-			//
+			$deleteId = '';
+			foreach ($_POST as $key => $value) 
+			{
+				$deleteId .= substr($key, 8).',';
+			}
+			$deleteId = substr($deleteId, 0, -1);
+			$this->db->query("DELETE FROM testresultinfo WHERE id IN (".$deleteId.")");
+			$this->index();
 		}
-		$output = $crud->render();
-		foreach ($output as $key=>$value)
-		{
-			$this->smarty->assign($key, $value);
-		}
-		$this->smarty->assign('item', '产品型号');
-		$this->smarty->assign('title', '产品管理');
-		$this->smarty->display('firstPage.tpl');
 	}
 	
 	public function exportResult()

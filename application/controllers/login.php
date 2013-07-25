@@ -133,7 +133,10 @@ class Login extends CW_Controller
 		}
 		else
 		{
-			$tmpRes = $this->db->query('SELECT * FROM user WHERE username = ?', strtolower($this->input->post('username')));
+			$tmpRes = $this->db->query('SELECT a.*,b.name AS rolename FROM 
+										user a
+										JOIN role b ON a.role = b.id
+										AND a.username = ?', strtolower($this->input->post('username')));
 			if ($tmpRes)
 			{
 				if ($tmpRes->num_rows() > 0)
@@ -143,6 +146,7 @@ class Login extends CW_Controller
 					{
 						$this->session->set_userdata('username', strtolower($this->input->post('username')));
 						$this->session->set_userdata('userId', $tmpArr['id']);
+						$this->session->set_userdata('rolename', $tmpArr['rolename']);
 						return TRUE;
 					}
 					else
@@ -191,7 +195,7 @@ class Login extends CW_Controller
 					->setCellValue('D1', 'test frequency')
 					->setCellValue('E1', 'Nominal value')
 					->setCellValue('F1', 'Unit')
-					->setCellValue('G1', 'Tol%')
+					->setCellValue('G1', 'Tol')
 					->setCellValue('H1', 'Residual inductance');
 		
 		$objPHPExcel->getActiveSheet()->setTitle('Sheet1');
@@ -209,7 +213,7 @@ class Login extends CW_Controller
 				$i = 2;
 				foreach ($incomingSpecArr as $value) 
 				{
-					$unitname = '';					
+					$unitname = '';
 					if($value['unitname'] == 'Ω')
 					{
 						$unitname = '';
@@ -233,7 +237,7 @@ class Login extends CW_Controller
 			            ->setCellValue('D'.$i, $value['testfrequency'])
 						->setCellValue('E'.$i, $value['nominalvalue'])
 						->setCellValue('F'.$i, $unitname)
-						->setCellValue('G'.$i, $value['tolerance'].'%')
+						->setCellValue('G'.$i, $value['tolerancenum'])
 						->setCellValue('H'.$i, $value['residualinductance']);
 					$i++;
 				}

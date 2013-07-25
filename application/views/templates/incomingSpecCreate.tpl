@@ -58,15 +58,40 @@
 		
 		$(".tolerance").keyup(function(){
 			var nominalvalue = $(".nominalvalue").val();
-			var tolerancenum = nominalvalue*$(this).val()/100;
-			$(".tolerancenum").attr("value",tolerancenum);
+			if(nominalvalue != 0)
+			{
+				var tolerancenum = nominalvalue*$(this).val()/100;
+				$(".tolerancenum").attr("value",tolerancenum);
+			}
 		});
 		
 		$(".tolerancenum").keyup(function(){
 			var nominalvalue = $(".nominalvalue").val();
-			var tolerance = $(this).val()/nominalvalue*100;
-			$(".tolerance").attr("value",tolerance);
+			if(nominalvalue != 0)
+			{
+				var tolerance = $(this).val()/nominalvalue*100;
+				$(".tolerance").attr("value",tolerance);
+			}
 		});
+		
+		$(".nominalvalue").keyup(function(){
+			var nominalvalue = $(this).val();
+			var tolerance = $(".tolerance").val();
+			var tolerancenum = $(".tolerancenum").val();
+			if(tolerance != '')
+			{
+				$(".tolerancenum").attr("value",tolerance*nominalvalue/100);
+			}
+			else if(tolerancenum != '')
+			{
+				$(".tolerance").attr("value",tolerancenum/nominalvalue*100);
+			}
+			else
+			{
+				
+			}
+		});
+		
 		$("#locLoginForm").validationEngine('attach',
 		{
 			promptPosition : "centerRight",

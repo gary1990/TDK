@@ -127,11 +127,14 @@
 				    		<span>Report Center</span>
 				    	</a>
 				    </li>
-				    <li>
-				    	<a class="{if $currenmenu == 'user'}clicked{else}{/if}" href="{base_url()}index.php/user">
-				    		<span>User</span>
-				    	</a>
-				    </li>
+				    {if $CI->session->userdata('rolename') eq 'Admin'}
+						<li>
+					    	<a class="{if $currenmenu == 'user'}clicked{else}{/if}" href="{base_url()}index.php/user">
+					    		<span>User</span>
+					    	</a>
+					    </li>
+					{else}
+					{/if}
 				    <li>
 				    	<a class="{if $currenmenu == 'inspector'}clicked{else}{/if}" href="{base_url()}index.php/inspector">
 				    		<span>Inspector</span>

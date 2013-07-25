@@ -4,6 +4,7 @@
 <!--{/block}-->
 <!--{block name=style}-->
 <link rel="stylesheet" type="text/css" href="{base_url()}resource/css/ui.datepicker.css" />
+<link rel="stylesheet" type="text/css" href="{base_url()}resource/css/chosen.css" />
 <style>
 </style>
 <!--{/block}-->
@@ -11,6 +12,7 @@
 <script src="{base_url()}resource/js/highCharts/highcharts.js"></script>
 <script src="{base_url()}resource/js/highCharts/modules/exporting.js"></script>
 <script type="text/javascript" src="{base_url()}resource/js/calendar/ui.datepicker.js"></script>
+<script type="text/javascript" src="{base_url()}resource/js/chosen.jquery.js"></script>
 <script type="text/javascript">
 	function setReportForm()
 	{
@@ -130,6 +132,8 @@
 			promptPosition : "centerRight",
 			autoPositionUpdate : "true"
 		});
+		//
+		$(".partno").chosen();
 	});
 
 	jQuery(function($)
