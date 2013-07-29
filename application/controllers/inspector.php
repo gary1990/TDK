@@ -99,22 +99,14 @@ class Inspector extends CW_Controller
 	//对密码的格式校验
 	public function check_user_password($str)
 	{
-		if(strlen($str) < 6)
+		if(preg_match("/^[a-zA-Z0-9]+$/", $str))
 		{
-			$this->form_validation->set_message('check_user_password', 'Password should character or number must more than six.');
-			return FALSE;
+			return TRUE;
 		}
 		else
 		{
-			if(preg_match("/^[a-zA-Z0-9]+$/", $str))
-			{
-				return TRUE;
-			}
-			else
-			{
-				$this->form_validation->set_message('check_user_password', 'Password should character or number must more than six.');
-				return FALSE;
-			}
+			$this->form_validation->set_message('check_user_password', 'Password should character or number must more than six.');
+			return FALSE;
 		}
 	}	
 }
