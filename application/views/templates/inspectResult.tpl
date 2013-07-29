@@ -177,7 +177,7 @@
 						<th>Time</th>
 						<th>Part No.</th>
 						<th>Type</th>
-						<th>Meas. Value</th>
+						<th>Test Value</th>
 						<th>Result</th>
 						<th>Batch No.</th>
 						<th>Supplier</th>

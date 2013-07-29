@@ -43,6 +43,7 @@ class ReportCenter extends CW_Controller
 		$resultList = array();
 		$limitLine1 = array();
 		$limitLine2 = array();
+		$nominalVal = array();
 		
 		if($partno == '' && $starttime == '' && $endtime == '')
 		{
@@ -85,11 +86,13 @@ class ReportCenter extends CW_Controller
 				$resultList[$value['testTime']] = $measvlaue;
 				$limitLine1[$value['testTime']] = $value['nominalvalue']-$value['tolerancenum'];
 				$limitLine2[$value['testTime']] = $value['nominalvalue']+$value['tolerancenum'];
+				$nominalVal[$value['testTime']] = $value['nominalvalue'];
 			}
 		}
 		$this->smarty->assign("resultList",$resultList);
 		$this->smarty->assign("limitLine1",$limitLine1);
 		$this->smarty->assign("limitLine2",$limitLine2);
+		$this->smarty->assign("nominalVal",$nominalVal);
 		$this->smarty->assign("currenmenu","reportcenter");
 		$this->smarty->display("reportCenter.tpl");
 	}

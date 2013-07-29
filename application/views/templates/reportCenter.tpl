@@ -31,9 +31,9 @@
 			xAxis :
 			{
 				categories : [],
-				enabled: false,
 				labels: {
-                    rotation: -90
+                    rotation: -90,
+                    enabled: false
                 }
 			},
 			yAxis :
@@ -60,6 +60,13 @@
 			{
 				valueSuffix: ['{$unitname|default:''}']
 			},
+			plotOptions: {
+            	spline: {
+                    marker: {
+                        enabled: false
+                    },
+                }
+            },
 			series : []
 		};
 		var series =
@@ -83,11 +90,17 @@
 				}
 			}
 		};
+		var series3 =
+		{
+			name : 'nominal value',
+			data : [],
+			pointWidth : 14,
+		};
 		var series2 =
 		{
 			name : 'Max',
 			data : [],
-			pointWidth : 14
+			pointWidth : 14,
 		};
 		var series1 =
 		{
@@ -119,9 +132,13 @@
 		/*{foreach from=$limitLine1 key=k item=value}*/
 		series1.data.push(/*{$value}*/);
 		/*{/foreach}*/
+		/*{foreach from=$nominalVal key=k item=value}*/
+		series3.data.push(/*{$value}*/);
+		/*{/foreach}*/
 		options.series.push(series);
 		options.series.push(series2);
 		options.series.push(series1);
+		options.series.push(series3);
 		chart = new Highcharts.Chart(options);
 	}
 	
