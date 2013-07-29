@@ -105,7 +105,7 @@ class Inspector extends CW_Controller
 		}
 		else
 		{
-			$this->form_validation->set_message('check_user_password', 'Password should character or number must more than six.');
+			$this->form_validation->set_message('check_user_password', 'Password is required and must character or number');
 			return FALSE;
 		}
 	}	
