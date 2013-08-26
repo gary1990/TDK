@@ -4,6 +4,7 @@
 <!--{/block}-->
 <!--{block name=style}-->
 <link rel="stylesheet" type="text/css" href="{base_url()}resource/css/ui.datepicker.css" />
+<link rel="stylesheet" type="text/css" href="{base_url()}resource/css/chosen.css" />
 <style>
 	tr th
 	{
@@ -26,16 +27,32 @@
 		width:80px;
 		display:inline-block;
 	}
+	.span-block2
+	{
+		width:150px;
+		display:inline-block;
+	}
 	.serchCondition{
 		margin-bottom:10px;
+	}
+	.condition_input
+	{
+		width:120px;
+	}
+	.condition_selecter
+	{
+		width:125px;
 	}
 </style>
 <!--{/block}-->
 <!--{block name=script}-->
 <script type="text/javascript" src="{base_url()}resource/js/calendar/ui.datepicker.js"></script>
 <script type="text/javascript" src="{base_url()}resource/js/jquery.form.js"></script>
+<script type="text/javascript" src="{base_url()}resource/js/chosen.jquery.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		//具有搜索功能的下拉列表
+		$(".partNo").chosen();
 		//分页事件
 		$(".locPage > a").click(function(e) 
 		{
@@ -137,29 +154,47 @@
 				<span class="span-block1">
 					Supplier:
 				</span>
-				{html_options name=supplier class=supplier options=$supplier selected=$smarty.post.supplier|default:''}
+				<span class="span-block2">
+					{html_options name=supplier class="supplier condition_selecter" options=$supplier selected=$smarty.post.supplier|default:''}
+				</span>
 				<span class="span-block1">
 					Type:
 				</span>
-				{html_options name=type class=type options=$type selected=$smarty.post.type|default:''}
+				<span class="span-block2">
+					{html_options name=type class="type condition_selecter" options=$type selected=$smarty.post.type|default:''}
+				</span>
 				<span class="span-block1">
 					Batch No.:
 				</span>
-				<input type="text" name="batchno" class="batchno" value="{$smarty.post.batchno|default:''}"/>
+				<span class="span-block2">
+					<input type="text" name="batchno" class="batchno condition_input" value="{$smarty.post.batchno|default:''}"/>
+				</span>
 				<span class="span-block1">
 					Result:
 				</span>
-				{html_options name=testresult class=testresult options=$testresult selected=$smarty.post.testresult|default:''}
+				<span class="span-block2">
+					{html_options name=testresult class="testresult condition_selecter" options=$testresult selected=$smarty.post.testresult|default:''}
+				</span>
 			</div>
 			<div class="serchCondition">
 				<span class="span-block1">
 					StartTime:
 				</span>
-				<input type="text" id="timefrom" name="timefrom" class="timefrom" value="{$smarty.post.timefrom|default:''}"/>
+				<span class="span-block2">
+					<input type="text" id="timefrom" name="timefrom" class="timefrom condition_input" value="{$smarty.post.timefrom|default:''}"/>
+				</span>
 				<span class="span-block1">
 					EndTime:
 				</span>
-				<input id="timeto" type="text" id="timeto" name="timeto" class="timeto" value="{$smarty.post.timeto|default:''}"/>
+				<span class="span-block2">
+					<input id="timeto" type="text" id="timeto" name="timeto" class="timeto condition_input" value="{$smarty.post.timeto|default:''}"/>
+				</span>
+				<span class="span-block1">
+					Part No.:
+				</span>
+				<span class="span-block2">
+					{html_options name=partNo class="partNo condition_selecter" options=$partNo selected=$smarty.post.partNo|default:''}
+				</span>
 				<input class="searchBtn" type="submit" value="Search"/>
 			</div>
 		</form>

@@ -13,6 +13,11 @@ class InspectResult extends CW_Controller
 		$supplierArr = $supplierObj->result_array();
 		$supplier = $this->array_switch($supplierArr, 'supplier', '(ALL)');
 		$this->smarty->assign('supplier',$supplier);
+		//取得Part No
+		$partNoObj = $this->db->query("SELECT DISTINCT partno FROM incomingspec ORDER BY partno ASC");
+		$partNoArr = $partNoObj->result_array();
+		$partNo = $this->array_switch($partNoArr, 'partno', '(ALL)');
+		$this->smarty->assign('partNo',$partNo);
 		//取得Type
 		$typeObj = $this->db->query("SELECT id,name FROM type");
 		$typeArr = $typeObj->result_array();
@@ -28,6 +33,12 @@ class InspectResult extends CW_Controller
 	
 	public function index($offset = 0, $limit = 30)
 	{
+		$partNoSql = "";
+		$partNo = emptyToNull($this->input->post("partNo"));
+		if($partNo != '')
+		{
+			$partNoSql = " AND b.partno = '".$partNo."' ";
+		}
 		$testresultSql = '';
 		$testresult = emptyToNull($this->input->post("testresult"));
 		if($testresult != '')
@@ -79,7 +90,7 @@ class InspectResult extends CW_Controller
 					  JOIN incomingspec b ON a.partno = b.id 
 					  JOIN type c ON b.type = c.id
 					  JOIN inspector d ON a.inspector = d.id
-					  JOIN unit e ON b.unit = e.id ".$testresultSql.$supplierSql.$typeSql.$batchNoSql.$timeFromSql.$timeToSql.
+					  JOIN unit e ON b.unit = e.id ".$partNoSql.$testresultSql.$supplierSql.$typeSql.$batchNoSql.$timeFromSql.$timeToSql.
 					  " ORDER BY a.testTime DESC";
 		$resultObj = $this->db->query($resultSql);
 		$resultArr = $resultObj->result_array();

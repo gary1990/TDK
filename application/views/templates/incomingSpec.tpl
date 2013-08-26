@@ -185,16 +185,16 @@
 						<a class="orderhref" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'typedesc'}typedesc{else}type{/if}">Type</a>
 					</th>
 					<th>
-						<a class="orderhref" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'testvoltagedesc'}testvoltagedesc{else}testvoltage{/if}">Test Voltage</a>
+						<a class="orderhref th5" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'testvoltagedesc'}testvoltagedesc{else}testvoltage{/if}">Test Voltage</a>
 					</th>
 					<th>
-						<a class="orderhref" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'testfrequencydesc'}testfrequencydesc{else}testfrequency{/if}">Test Freq</a>
+						<a class="orderhref th4" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'testfrequencydesc'}testfrequencydesc{else}testfrequency{/if}">Test Freq</a>
 					</th>
 					<th>
-						<a class="orderhref" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'residualinductancedesc'}residualinductancedesc{else}residualinductance{/if}">Residual inductance</a>
+						<a class="orderhref th6" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'residualinductancedesc'}residualinductancedesc{else}residualinductance{/if}">Residual inductance</a>
 					</th>
 					<th>
-						<a class="orderhref" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'nominalvaluedesc'}nominalvaluedesc{else}nominalvalue{/if}">Nominal Value</a>
+						<a class="orderhref th5" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'nominalvaluedesc'}nominalvaluedesc{else}nominalvalue{/if}">Nominal Value</a>
 					</th>
 					<th>
 						<a class="orderhref" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'unitdesc'}unitdesc{else}unit{/if}">Unit</a>
@@ -203,7 +203,7 @@
 						<a class="orderhref" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'tolerancedesc'}tolerancedesc{else}tolerance{/if}">Tol %</a>
 					</th>
 					<th>
-						<a class="orderhref" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'tolerancenumdesc'}tolerancenumdesc{else}tolerancenum{/if}">Tol Num</a>
+						<a class="orderhref th4" href="{site_url()}/incomingSpec/index/0/{if $assignorderby eq 'tolerancenumdesc'}tolerancenumdesc{else}tolerancenum{/if}">Tol Num</a>
 					</th>
 					<th>&nbsp;</th>
 				</tr>

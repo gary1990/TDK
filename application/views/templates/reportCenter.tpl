@@ -184,11 +184,11 @@
 			</span>
 			{html_options name=partno class=partno options=$partnoArr selected=$smarty.post.partno|default:''}
 			<span class="span-block1">
-				Start time:
+				StartTime:
 			</span>
 			<input type="text" id="starttime" name="starttime" class="starttime" value="{$smarty.post.starttime|default:''}"/>
 			<span class="span-block1">
-				End time:
+				EndTime:
 			</span>
 			<input type="text" id="endtime" name="endtime" class="endtime" value="{$smarty.post.endtime|default:''}"/>
 			<input type="submit" value="Search"/>
