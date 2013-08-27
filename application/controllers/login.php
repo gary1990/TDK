@@ -191,13 +191,12 @@ class Login extends CW_Controller
 		$objPHPExcel->setActiveSheetIndex(0)
 		            ->setCellValue('A1', 'Part No.')
 		            ->setCellValue('B1', 'Supplier')
-					->setCellValue('C1', 'Tets Voltage')
-		            ->setCellValue('D1', 'Type')
-					->setCellValue('E1', 'test frequency')
-					->setCellValue('F1', 'Nominal value')
-					->setCellValue('G1', 'Unit')
-					->setCellValue('H1', 'Tol')
-					->setCellValue('I1', 'Residual inductance');
+		            ->setCellValue('C1', 'Type')
+					->setCellValue('D1', 'test frequency')
+					->setCellValue('E1', 'Nominal value')
+					->setCellValue('F1', 'Unit')
+					->setCellValue('G1', 'Tol')
+					->setCellValue('H1', 'Residual inductance');
 		
 		$objPHPExcel->getActiveSheet()->setTitle('Sheet1');
 		
@@ -234,13 +233,12 @@ class Login extends CW_Controller
 					$objPHPExcel->setActiveSheetIndex(0)
 			            ->setCellValue('A'.$i, $value['partno'])
 			            ->setCellValue('B'.$i, $value['supplier'])
-						->setCellValue('C'.$i, $value['testvoltage'])
-			            ->setCellValue('D'.$i, $value['typename'])
-			            ->setCellValue('E'.$i, $value['testfrequency'])
-						->setCellValue('F'.$i, $value['nominalvalue'])
-						->setCellValue('G'.$i, $unitname)
-						->setCellValue('H'.$i, $value['tolerancenum'])
-						->setCellValue('I'.$i, $value['residualinductance']);
+			            ->setCellValue('C'.$i, $value['typename'])
+			            ->setCellValue('D'.$i, $value['testfrequency'])
+						->setCellValue('E'.$i, $value['nominalvalue'])
+						->setCellValue('F'.$i, $unitname)
+						->setCellValue('G'.$i, $value['tolerancenum'])
+						->setCellValue('H'.$i, $value['residualinductance']);
 					$i++;
 				}
 			}
